@@ -11,6 +11,8 @@ endif()
 
 project ("Minecraft Alpha Mapper")
 
-# Include sub-projects.
-#
+## Include sub-projects.
+# External Dependency
+add_subdirectory ("_dependlibs/SDL2")
+# Main Subproject
 add_subdirectory ("MC-AlphaMapper")

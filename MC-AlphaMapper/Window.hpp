@@ -1,7 +1,6 @@
 #pragma once
 
 #include "globals.h"
-#include <SDL2/SDL.h>
 /**
 * @file Window.hpp
 * @brief The header file for the window handler of the TtEL Minecraft Alpha Level Mapper

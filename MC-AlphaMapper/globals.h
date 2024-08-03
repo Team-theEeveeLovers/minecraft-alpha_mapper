@@ -31,3 +31,5 @@
 
 #define EXIT() exit()
 #endif
+
+#include <SDL2/SDL.h>

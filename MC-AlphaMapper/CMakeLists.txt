@@ -1,4 +1,4 @@
-add_executable(MC_Alpha_Mapper "globals.h" "Main.cpp" "Main.h" "Window.cpp" "Window.hpp")
+add_executable(MC_Alpha_Mapper "globals.h" "Main.cpp" "Main.h" "Window.cpp" "Window.hpp" "Renderer.cpp" "Renderer.hpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET MC_Alpha_Mapper PROPERTY CXX_STANDARD 20)

@@ -1,9 +1,12 @@
 #include "Main.h"
 #include "Window.hpp"
+#include "Renderer.hpp"
+
 
 int screen_width = 640, screen_height = 480;
 
 WINDOW main_window;
+RENDERER main_renderer;
 
 bool initMain() {
 	bool success = true;
@@ -26,11 +29,13 @@ bool initMain() {
 			success = false;
 		}
 		else {
-			if (!main_window.createWindowSurface()) {
+			std::cout << "Successfully created window." << std::endl << std::endl;
+			std::cout << "Creating renderer..." << std::endl;
+			if (!main_renderer.createRenderer(main_window.getWindow(), SDL_RENDERER_ACCELERATED)) {
 				success = false;
 			}
 			else {
-				std::cout << "Successfully created window." << std::endl << std::endl;
+				std::cout << "Successfully created renderer." << std::endl << std::endl;
 			}
 		}
 	}
@@ -44,6 +49,8 @@ void exitMain()
 
 	std::cout << "Destroying window..." << std::endl << std::endl;
 	main_window.destroyWindow();
+	std::cout << "Destroying renderer..." << std::endl << std::endl;
+	main_renderer.destroyRenderer();
 	//Quit SDL subsystems
 	SDL_Quit();
 }
@@ -87,10 +94,18 @@ int main(int argc, char* argv[]) {
 						draw++;
 					}
 				}
+				
+				main_renderer.setDrawColor(draw, draw, draw);
+				main_renderer.renderClear();
 
-				main_window.fillRect(NULL, draw, draw, draw);
 
-				main_window.updateWindowSurface();
+
+
+
+
+
+
+				main_renderer.renderPresent();
 			}
 		}
 		exitMain();

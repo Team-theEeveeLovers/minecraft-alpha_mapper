@@ -40,6 +40,9 @@ bool initMain() {
 
 void exitMain()
 {
+	std::cout << std::endl << std::endl << "Exiting..." << std::endl << std::endl;
+
+	std::cout << "Destroying window..." << std::endl << std::endl;
 	main_window.destroyWindow();
 	//Quit SDL subsystems
 	SDL_Quit();

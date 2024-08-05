@@ -31,7 +31,7 @@ bool initMain() {
 		else {
 			std::cout << "Successfully created window." << std::endl << std::endl;
 			std::cout << "Creating renderer..." << std::endl;
-			if (!main_renderer.createRenderer(main_window.getWindow(), SDL_RENDERER_ACCELERATED)) {
+			if (!main_renderer.createRenderer(main_window.getWindow(), SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)) {
 				success = false;
 			}
 			else {
@@ -68,9 +68,6 @@ int main(int argc, char* argv[]) {
 		bool quit = false;
 		int draw = 0xFF;
 
-		// this value alternates between true/false every frame
-		bool alternating = false;
-
 		// is the value in draw incrementing or decrementing?
 		bool drawIncrementing = false;
 
@@ -81,8 +78,6 @@ int main(int argc, char* argv[]) {
 			}
 			// if the above hasn't resulted in exiting
 			if (!quit) {
-				alternating = !alternating;
-				if (alternating) {
 					if (draw != 0x00 && !drawIncrementing) {
 						draw--;
 					}
@@ -93,7 +88,6 @@ int main(int argc, char* argv[]) {
 						drawIncrementing = !drawIncrementing;
 						draw++;
 					}
-				}
 				
 				main_renderer.setDrawColor(draw, draw, draw);
 				main_renderer.renderClear();

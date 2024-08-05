@@ -26,7 +26,7 @@ public:
 	 * @param index - the index of the rendering device to create the context with, or leave blank for the first supported device
 	 * @return true if renderer created successfully, or false if error occurred.
 	 */
-	bool createRenderer(SDL_Window* window, SDL_RendererFlags flags = SDL_RENDERER_SOFTWARE, int index = -1);
+	bool createRenderer(SDL_Window* window, Uint32 flags = SDL_RENDERER_SOFTWARE, int index = -1);
 
 	/**
 	 * @brief Sets the drawing color of the renderer

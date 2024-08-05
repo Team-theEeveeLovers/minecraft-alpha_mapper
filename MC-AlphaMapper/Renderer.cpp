@@ -22,7 +22,7 @@ SDL_Renderer* RENDERER::getRenderer()
 	return SDLR;
 }
 
-bool RENDERER::createRenderer(SDL_Window* window, SDL_RendererFlags flags, int index)
+bool RENDERER::createRenderer(SDL_Window* window, Uint32 flags, int index)
 {
 	SDLR = SDL_CreateRenderer(window, index, flags);
 	if (window == NULL) {

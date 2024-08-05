@@ -86,7 +86,10 @@ int main(int argc, char* argv[]) {
 					}
 					else {
 						drawIncrementing = !drawIncrementing;
-						draw++;
+						if (drawIncrementing)
+							draw++;
+						else
+							draw--;
 					}
 				
 				main_renderer.setDrawColor(draw, draw, draw);

@@ -2,3 +2,6 @@
 	path = _dependlibs/SDL2
 	url = https://github.com/libsdl-org/SDL/
 	branch = SDL2
+[submodule "MC-AlphaMapper/_external/imgui"]
+	path = MC-AlphaMapper/_external/imgui
+	url = https://github.com/ocornut/imgui/

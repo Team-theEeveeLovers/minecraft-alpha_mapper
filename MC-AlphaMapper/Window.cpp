@@ -11,7 +11,7 @@ SDL_Window* WINDOW::getWindow()
 	return SDLW;
 }
 
-bool WINDOW::createWindow(const char* title, int width, int height, SDL_WindowFlags flags)
+bool WINDOW::createWindow(const char* title, int width, int height, Uint32 flags)
 {
 	SDLW = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
 	if (SDLW == NULL) {

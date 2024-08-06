@@ -31,7 +31,7 @@ public:
 	* @param flags - the flags of the window, or leave blank for default "SHOWN" flag
 	* @return true if window created successfully, or false if error occurred.
 	*/
-	bool createWindow(const char* title, int width, int height, SDL_WindowFlags flags = SDL_WINDOW_SHOWN);
+	bool createWindow(const char* title, int width, int height, Uint32 flags = SDL_WINDOW_SHOWN);
 
 	// create a window surface for software rendering
 	bool createWindowSurface();

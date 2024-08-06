@@ -63,6 +63,9 @@ protected:
 	// is the SDL2 backend initalized?
 	bool backend_init = false;
 
+	// File signature using unused padding space in memory
+	char signature[6] = { '\0', 'G', 'U', 'I', 'C', '\0'};
+
 	// the SDL_Renderer* the context is initalized with, if any.
 	SDL_Renderer* initalizedRenderer = NULL;
 };

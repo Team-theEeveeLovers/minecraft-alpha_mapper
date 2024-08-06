@@ -31,7 +31,7 @@ bool initMain() {
 		else {
 			std::cout << "Successfully created window." << std::endl << std::endl;
 			std::cout << "Creating renderer..." << std::endl;
-			if (!main_renderer.createRenderer(main_window.getWindow(), SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)) {
+			if (!main_renderer.createRenderer(main_window, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)) {
 				success = false;
 			}
 			else {

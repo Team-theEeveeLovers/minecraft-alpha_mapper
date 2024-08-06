@@ -1,12 +1,14 @@
 #include "Main.h"
 #include "Window.hpp"
 #include "Renderer.hpp"
+#include "Gui.hpp"
 
 
 int screen_width = 640, screen_height = 480;
 
 WINDOW main_window;
 RENDERER main_renderer;
+ImGui_CONTEXT main_gui;
 
 bool initMain() {
 	bool success = true;
@@ -23,19 +25,29 @@ bool initMain() {
 	}
 	else {
 		std::cout << "success" << std::endl << std::endl;
-		
-		std::cout << "Creating window..." << std::endl;
-		if (!main_window.createWindow("MC Alpha Mapper", screen_width, screen_height)) {
+
+		if (!main_gui.createContext()) {
+			SDL_LogError(0, "ImGui could not initialize!\n\n");
 			success = false;
 		}
 		else {
-			std::cout << "Successfully created window." << std::endl << std::endl;
-			std::cout << "Creating renderer..." << std::endl;
-			if (!main_renderer.createRenderer(main_window, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)) {
+			std::cout << "Creating window..." << std::endl;
+			if (!main_window.createWindow("MC Alpha Mapper", screen_width, screen_height)) {
 				success = false;
 			}
 			else {
-				std::cout << "Successfully created renderer." << std::endl << std::endl;
+				std::cout << "Successfully created window." << std::endl << std::endl;
+				std::cout << "Creating renderer..." << std::endl;
+				if (!main_renderer.createRenderer(main_window, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)) {
+					success = false;
+				}
+				else {
+					std::cout << "Successfully created renderer." << std::endl << std::endl;
+					if (!main_gui.initalizeForSDL2(main_window, main_renderer)) {
+						SDL_LogError(0, "ImGui SDL2 backend could not initialize!\n\n");
+						success = false;
+					}
+				}
 			}
 		}
 	}
@@ -53,6 +65,10 @@ void exitMain()
 	main_renderer.destroyRenderer();
 	//Quit SDL subsystems
 	SDL_Quit();
+
+	main_gui.shutdownContext();
+
+	std::cout << std::endl << std::endl << "Goodbye!" << std::endl << std::endl;
 }
 
 int main(int argc, char* argv[]) {
@@ -94,17 +110,17 @@ int main(int argc, char* argv[]) {
 				
 				main_renderer.setDrawColor(draw, draw, draw);
 				main_renderer.renderClear();
+				main_gui.newFrame();
 
 
 
 
 
-
-
-
+				main_gui.renderPresent();
 				main_renderer.renderPresent();
 			}
 		}
 		exitMain();
+		return 0;
 	}
 }

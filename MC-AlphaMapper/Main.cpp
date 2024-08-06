@@ -32,7 +32,7 @@ bool initMain() {
 		}
 		else {
 			std::cout << "Creating window..." << std::endl;
-			if (!main_window.createWindow("MC Alpha Mapper", screen_width, screen_height)) {
+			if (!main_window.createWindow("MC Alpha Mapper", screen_width, screen_height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE)) {
 				success = false;
 			}
 			else {

@@ -55,6 +55,42 @@ bool initMain() {
 	return success;
 }
 
+void initMainStyles() 
+{
+	// Get the style
+	ImGuiStyle& style = ImGui::GetStyle();
+
+	// positioning
+	style.WindowRounding = 4.0f;
+	style.FrameRounding = 7.0f;
+	style.GrabRounding = 7.0f;
+	style.CircleTessellationMaxError = 0.375f;
+
+	// colors
+	ImVec4* colors = style.Colors;
+	colors[ImGuiCol_WindowBg] = ImVec4(0.03f, 0.11f, 0.03f, 0.80f);
+	colors[ImGuiCol_TitleBg] = ImVec4(0.04f, 0.27f, 0.04f, 0.82f);
+	colors[ImGuiCol_TitleBgActive] = ImVec4(0.16f, 0.55f, 0.14f, 1.00f);
+	colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.00f, 0.08f, 0.00f, 0.51f);
+	colors[ImGuiCol_Button] = ImVec4(0.53f, 0.25f, 0.00f, 0.54f);
+	colors[ImGuiCol_ButtonHovered] = ImVec4(0.48f, 0.28f, 0.07f, 0.91f);
+	colors[ImGuiCol_ButtonActive] = ImVec4(0.60f, 0.53f, 0.11f, 1.00f);
+	colors[ImGuiCol_CheckMark] = ImVec4(0.26f, 1.00f, 0.31f, 1.00f);
+	colors[ImGuiCol_SliderGrab] = ImVec4(0.24f, 0.52f, 0.32f, 1.00f);
+	colors[ImGuiCol_SliderGrabActive] = ImVec4(0.26f, 0.59f, 0.38f, 1.00f);
+	colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 0.90f);
+	colors[ImGuiCol_FrameBg] = ImVec4(0.44f, 0.49f, 0.60f, 0.54f);
+	colors[ImGuiCol_FrameBgHovered] = ImVec4(0.58f, 0.59f, 0.65f, 0.40f);
+	colors[ImGuiCol_FrameBgActive] = ImVec4(0.35f, 0.35f, 0.43f, 0.75f);
+	colors[ImGuiCol_ResizeGrip] = ImVec4(0.49f, 0.59f, 0.33f, 0.20f);
+	colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.49f, 0.59f, 0.32f, 0.67f);
+	colors[ImGuiCol_ResizeGripActive] = ImVec4(0.49f, 0.59f, 0.31f, 0.95f);
+	colors[ImGuiCol_TabHovered] = ImVec4(0.26f, 0.83f, 0.82f, 0.68f);
+	colors[ImGuiCol_Tab] = ImVec4(0.00f, 0.51f, 0.40f, 0.86f);
+	colors[ImGuiCol_TabSelected] = ImVec4(0.31f, 0.51f, 0.71f, 0.97f);
+	colors[ImGuiCol_TabSelectedOverline] = ImVec4(1.00f, 0.54f, 0.54f, 0.42f);
+}
+
 void exitMain()
 {
 	std::cout << std::endl << std::endl << "Exiting..." << std::endl << std::endl;
@@ -79,7 +115,8 @@ int main(int argc, char* argv[]) {
 	else {
 		std::cout << std::endl << "Initalization Success." << std::endl;
 
-		
+		initMainStyles();
+
 		SDL_Event e; 
 		bool quit = false;
 		int draw = 0xFF;
@@ -114,6 +151,7 @@ int main(int argc, char* argv[]) {
 				main_renderer.renderClear();
 				main_gui.newFrame();
 
+				ImGui::SetNextWindowPos(ImVec2(20.f, 20.f), ImGuiCond_Once);
 				if (ImGui::Begin("Operations")) {
 					ImGui::Text("Coming Soon!");
 					if (ImGui::Button("Show ImGui Demo Window"))

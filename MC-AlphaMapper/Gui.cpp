@@ -11,14 +11,13 @@
 bool ImGui_CONTEXT::createContext(void)
 {
 	GUI_CONTEXT = ImGui::CreateContext();
-	if (!GUI_CONTEXT->Initialized) {
-		return false;
+	if (!(GUI_CONTEXT->Initialized)) 
 		initalized = false;
-	}
-	else {
-		return true;
+	else 
 		initalized = true;
-	}
+
+	return initalized;
+
 	backend_init = false;
 }
 
@@ -79,8 +78,10 @@ void ImGui_CONTEXT::renderPresent(void)
 
 void ImGui_CONTEXT::shutdownContext(void)
 {
-	if (backend_init)
+	if (backend_init) {
 		ImGui_ImplSDL2_Shutdown(); // shut down backend
+		ImGui_ImplSDLRenderer2_Shutdown(); // shut down renderer backend
+	}
 	if (initalized)
 		ImGui::DestroyContext(GUI_CONTEXT); // destroy context
 

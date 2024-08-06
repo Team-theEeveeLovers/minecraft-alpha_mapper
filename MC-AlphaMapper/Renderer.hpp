@@ -20,7 +20,11 @@ public:
 	// function to convert to SDL_Renderer*
 	operator SDL_Renderer* () { return SDLR; };
 
-	// Get the SDL_Renderer* context contained within
+	/**
+	 * @brief Get the SDL_Renderer* context contained within the object
+	 * @deprecated This function is deprecated, please use the auto type converter to get an SDL_Renderer* context instead.
+	 * @return the SDL_Renderer* context contained within the current RENDERER object
+	 */
 	SDL_Renderer* getRenderer();
 
 	/**

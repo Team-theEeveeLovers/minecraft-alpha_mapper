@@ -15,7 +15,11 @@ public:
 	// function to convert to SDL_Window*
 	operator SDL_Window* () { return SDLW; };
 
-	// get the SDL_Window* context contained within
+	/**
+	 * @brief get the SDL_Window* context contained within the object
+	 * @deprecated This function is deprecated, please use the auto type converter to get an SDL_Window* context instead.
+	 * @return the SDL_Window* context contained within the WINDOW object
+	 */
 	SDL_Window* getWindow();
 
 	/** 

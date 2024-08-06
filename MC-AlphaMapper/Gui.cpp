@@ -79,7 +79,8 @@ void ImGui_CONTEXT::renderPresent(void)
 
 void ImGui_CONTEXT::shutdownContext(void)
 {
-	ImGui_ImplSDL2_Shutdown(); // shut down backend
+	if (backend_init)
+		ImGui_ImplSDL2_Shutdown(); // shut down backend
 	if (initalized)
 		ImGui::DestroyContext(GUI_CONTEXT); // destroy context
 

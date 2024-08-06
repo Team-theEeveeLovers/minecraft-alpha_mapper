@@ -90,6 +90,7 @@ int main(int argc, char* argv[]) {
 		while (!quit) {
 			// temporary event handler until we move event handling to a separate header
 			while (SDL_PollEvent(&e)) { 
+				main_gui.processEvents(&e);
 				if (e.type == SDL_QUIT) quit = true; 
 			}
 			// if the above hasn't resulted in exiting

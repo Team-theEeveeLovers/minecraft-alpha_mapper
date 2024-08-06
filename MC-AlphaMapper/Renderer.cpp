@@ -22,11 +22,12 @@ SDL_Renderer* RENDERER::getRenderer()
 	return SDLR;
 }
 
-bool RENDERER::createRenderer(SDL_Window* window, Uint32 flags, int index)
+bool RENDERER::createRenderer(WINDOW window, Uint32 flags, int index)
 {
-	SDLR = SDL_CreateRenderer(window, index, flags);
-	if (window == NULL) {
-		ASSERT(window != NULL && "Tried to create a renderer from an invalid window!");
+	SDL_Window* mWindow = window;
+	SDLR = SDL_CreateRenderer(mWindow, index, flags);
+	if (mWindow == NULL) {
+		ASSERT(mWindow != NULL && "Tried to create a renderer from an invalid window!");
 		return false;
 	}
 	else if (SDLR == NULL) {

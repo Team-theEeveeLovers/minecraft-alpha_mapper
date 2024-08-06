@@ -83,6 +83,7 @@ int main(int argc, char* argv[]) {
 		SDL_Event e; 
 		bool quit = false;
 		int draw = 0xFF;
+		bool demoWindowOpen = false;
 
 		// is the value in draw incrementing or decrementing?
 		bool drawIncrementing = false;
@@ -113,9 +114,17 @@ int main(int argc, char* argv[]) {
 				main_renderer.renderClear();
 				main_gui.newFrame();
 
-
-
-
+				if (ImGui::Begin("Operations")) {
+					ImGui::Text("Coming Soon!");
+					if (ImGui::Button("Show ImGui Demo Window"))
+					{
+						demoWindowOpen = !demoWindowOpen;
+					}
+				}
+				ImGui::End();
+				
+				if (demoWindowOpen)
+					ImGui::ShowDemoWindow(&demoWindowOpen);
 
 				main_gui.renderPresent();
 				main_renderer.renderPresent();

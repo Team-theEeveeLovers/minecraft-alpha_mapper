@@ -1,9 +1,9 @@
 add_executable(
 	MC_Alpha_Mapper 
-"globals.h" "Main.cpp" "Main.h" "Window.cpp" "Window.hpp" "Renderer.cpp" "Renderer.hpp" 
-"_external/imgui/imgui.cpp" "_external/imgui/imgui_demo.cpp" "_external/imgui/imgui_draw.cpp" "_external/imgui/imgui_tables.cpp" "_external/imgui/imgui_widgets.cpp"
+"globals.h" "Main.cpp" "Main.h" "Window.cpp" "Window.hpp" "Renderer.cpp" "Renderer.hpp" "Gui.cpp" "Gui.hpp" 
+"_external/imgui/imgui.cpp" "_external/imgui/imgui_demo.cpp" "_external/imgui/imgui_draw.cpp" "_external/imgui/imgui_tables.cpp" "_external/imgui/imgui_widgets.cpp" 
 "_external/imgui/backends/imgui_impl_sdl2.cpp" "_external/imgui/backends/imgui_impl_sdlrenderer2.cpp"
-)
+ )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET MC_Alpha_Mapper PROPERTY CXX_STANDARD 20)

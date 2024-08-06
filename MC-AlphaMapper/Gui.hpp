@@ -38,6 +38,12 @@ public:
 	bool setCurrentContext();
 
 	/**
+	 * @brief Process events on the ImGui side. Call this before processing events yourself.
+	 * @param event - pointer to SDL_Event structure to process
+	 */
+	void processEvents(SDL_Event* event);
+
+	/**
 	 * @brief Starts a new frame on the current context used by ImGui. Run this *after* you run renderClear() on your renderer.
 	 */
 	void newFrame(void);

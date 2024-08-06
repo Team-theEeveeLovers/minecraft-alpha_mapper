@@ -51,6 +51,11 @@ bool ImGui_CONTEXT::setCurrentContext()
 	}
 }
 
+void ImGui_CONTEXT::processEvents(SDL_Event* event)
+{
+	ImGui_ImplSDL2_ProcessEvent(event);
+}
+
 void ImGui_CONTEXT::newFrame(void)
 {
 	if (!backend_init)

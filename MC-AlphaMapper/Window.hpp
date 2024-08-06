@@ -11,6 +11,10 @@
 
 class WINDOW {
 public:
+
+	// function to convert to SDL_Window*
+	operator SDL_Window* () { return SDLW; };
+
 	// get the SDL_Window* context contained within
 	SDL_Window* getWindow();
 

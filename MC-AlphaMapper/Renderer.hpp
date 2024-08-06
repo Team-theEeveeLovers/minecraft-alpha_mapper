@@ -16,6 +16,10 @@ private:
 	// INTERNAL FUNCTION: check if the current render is valid, if not, returns false
 	bool checkRenderer();
 public:
+
+	// function to convert to SDL_Renderer*
+	operator SDL_Renderer* () { return SDLR; };
+
 	// Get the SDL_Renderer* context contained within
 	SDL_Renderer* getRenderer();
 

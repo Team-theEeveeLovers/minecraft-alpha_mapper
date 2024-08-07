@@ -8,3 +8,6 @@
 [submodule "MC-AlphaMapper/_external/imgui-filebrowser"]
 	path = MC-AlphaMapper/_external/imgui-filebrowser
 	url = https://github.com/AirGuanZ/imgui-filebrowser
+[submodule "MC-AlphaMapper/_external/gzip-hpp"]
+	path = MC-AlphaMapper/_external/gzip-hpp
+	url = https://github.com/mapbox/gzip-hpp

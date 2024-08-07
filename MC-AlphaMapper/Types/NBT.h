@@ -1,4 +1,13 @@
-enum tagType {
+#define BYTE Uint8
+#define SHORT short
+#define INT Sint32
+#define LONG long long // we are using long long here because normal long is 32-bit according to the standard but Java longs are 64-bit and long long is 64-bit
+#define FLOAT float
+#define DOUBLE double
+
+
+
+enum class tagType : BYTE {
 	TAG_End = 0x00,
 	TAG_Byte = 0x01,
 	TAG_Short = 0x02,
@@ -27,18 +36,33 @@ public:
 
 class ByteTag : public tag {
 	// the tag is byte type
-	tagType Type = TAG_Byte;
+	tagType Type = tagType::TAG_Byte;
 	// the byte value contained within the tag
 	BYTE value = 0x00;
 };
 
+class ShortTag : public tag {
+	// the tag is short type
+	tagType Type = tagType::TAG_Short;
+	// the byte value contained within the tag
+	SHORT value = 0x00;
+};
+
 class LongTag : public tag {
 	// the tag is long type
-	tagType Type = TAG_Long;
+	tagType Type = tagType::TAG_Long;
 
 
 	// we are using long long here because normal long is 32-bit but Java longs are 64-bit
 
 	// the long value contained within the tag 
 	long long value = 0x00i64;
+};
+
+class StringTag : public tag {
+	// the tag is string type
+	tagType Type = tagType::TAG_String;
+
+	// the UTF-8 string contained within
+	std::string value;
 };

@@ -21,7 +21,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	)
 endif()
 
-target_include_directories(MC_Alpha_Mapper PRIVATE "_external/imgui/" "_external/imgui-filebrowser/")
+target_include_directories(MC_Alpha_Mapper PRIVATE "_external/" "_external/imgui/" "_external/imgui-filebrowser/" "_external/gzip-hpp/include/")
 
 # Link to required libraries
 target_link_libraries(MC_Alpha_Mapper PRIVATE SDL2::SDL2)

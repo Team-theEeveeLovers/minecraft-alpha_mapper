@@ -14,5 +14,8 @@ project ("Minecraft Alpha Mapper")
 ## Include sub-projects.
 # External Dependency
 add_subdirectory ("_dependlibs/SDL2")
+# External Dependency
+add_subdirectory("_dependlibs/zlib")
 # Main Subproject
 add_subdirectory ("MC-AlphaMapper")
+

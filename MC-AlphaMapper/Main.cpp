@@ -2,6 +2,9 @@
 #include "Window.hpp"
 #include "Renderer.hpp"
 #include "Gui.hpp"
+#include "FileLoading.hpp"
+
+
 
 
 int screen_width = 640, screen_height = 480;
@@ -9,6 +12,8 @@ int screen_width = 640, screen_height = 480;
 WINDOW main_window;
 RENDERER main_renderer;
 ImGui_CONTEXT main_gui;
+
+LEVEL_DATA currentLVLFile;
 
 bool initMain() {
 	bool success = true;
@@ -107,6 +112,8 @@ void exitMain()
 	main_window.destroyWindow();
 	std::cout << "Destroying renderer..." << std::endl << std::endl;
 	main_renderer.destroyRenderer();
+
+	currentLVLFile.closeFile();
 	//Quit SDL subsystems
 	SDL_Quit();
 
@@ -139,6 +146,18 @@ int main(int argc, char* argv[]) {
 		// is the value in draw incrementing or decrementing?
 		bool drawIncrementing = false;
 
+
+		// file menu
+		ImGui::FileBrowser fileDialog;
+		std::string selectedfilepath;
+
+		fileDialog.SetTitle("Open level.dat");
+		fileDialog.SetTypeFilters(
+			{
+				".dat"
+			}
+		);
+
 		while (!quit) {
 			// temporary event handler until we move event handling to a separate header
 			while (SDL_PollEvent(&e)) { 
@@ -169,7 +188,7 @@ int main(int argc, char* argv[]) {
 				if (ImGui::Begin("Operations", NULL, ImGuiWindowFlags_MenuBar)) {
 					if (ImGui::BeginMenuBar()) {
 						if (ImGui::BeginMenu("File")) {
-							if (ImGui::MenuItem("Open", "(Coming Soon!)", false, false)) {}
+							if (ImGui::MenuItem("Open")) { fileDialog.Open(); }
 							if (ImGui::MenuItem("Save", "(Coming Soon!)", false, false)) {}
 							if (ImGui::MenuItem("Save As...", "(Coming Soon!)", false, false)) {}
 							if (ImGui::MenuItem("Close File", "(Coming Soon!)", false, false)) {}
@@ -205,8 +224,37 @@ int main(int argc, char* argv[]) {
 				if (abutWindowOpen)
 					ImGui::ShowAboutWindow(&abutWindowOpen);
 
+				fileDialog.Display();
+
 				main_gui.renderPresent();
 				main_renderer.renderPresent();
+
+				if (fileDialog.HasSelected()) {
+					main_renderer.setDrawColor(draw, draw, draw);
+					main_renderer.renderClear();
+					main_gui.newFrame();
+
+					selectedfilepath = fileDialog.GetSelected().string();
+					fileDialog.ClearSelected();
+
+					const ImGuiViewport* viewport = ImGui::GetMainViewport();
+					ImGui::SetNextWindowPos(viewport->WorkPos);
+					ImGui::SetNextWindowSize(viewport->WorkSize);
+					ImGui::Begin("Loading...", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+					ImGui::Text("Loading...");
+					ImGui::Text("Please wait...");
+					ImGui::End();
+
+					main_gui.renderPresent();
+					main_renderer.renderPresent();
+					if (!currentLVLFile.loadFile(selectedfilepath)) {
+						//SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, ("Couldn't open file " + selectedfilepath).c_str(), ("SDL2 Error: " + std::string(SDL_GetError())).c_str(), main_window);
+					}
+					else {
+
+					}
+				}
+
 			}
 		}
 		exitMain();

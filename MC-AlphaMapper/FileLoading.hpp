@@ -1,6 +1,12 @@
 #pragma once
 #include "globals.h"
 #include "Types/NBT.h"
+#include <zlib.h>
+#include <zconf.h>
+
+#ifndef ZLIB_CONST
+#define ZLIB_CONST
+#endif
 
 /**
 * @file FileLoading.hpp
@@ -40,6 +46,13 @@ protected:
 	std::string compressedData;
 	// the seed of the world
 	LongTag seed;
+
+	/**
+	 * @brief Checks if a 3 byte header is valid for GZ
+	 * @param bytes - A pointer to an array containing the 3 bytes bytes
+	 * @return True if valid, false if invalid
+	 */
+	bool checkGZheader(Uint8 *bytes);
 };
 
 class CHUNK_DATA {

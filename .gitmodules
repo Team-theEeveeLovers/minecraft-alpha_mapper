@@ -11,3 +11,6 @@
 [submodule "MC-AlphaMapper/_external/gzip-hpp"]
 	path = MC-AlphaMapper/_external/gzip-hpp
 	url = https://github.com/mapbox/gzip-hpp
+[submodule "zlib"]
+	path = _dependlibs/zlib
+	url = https://github.com/TheEeveeLovers/zlib

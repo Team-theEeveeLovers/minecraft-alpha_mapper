@@ -21,7 +21,13 @@
  * @brief A class representing the level.dat file
  */
 class LEVEL_DATA {
+private:
+	// File signature using unused padding space in memory caused by alignment
+	char signature[7] = { '\0', 'L', 'V', 'L', 'd', ' t', '\0' };
 public:
+	// Is the file loaded?
+	bool initalized = false;
+
 	/**
 	 * @brief Loads a level.dat file
 	 * @param path - Filepath pointing to a level.dat file to load from

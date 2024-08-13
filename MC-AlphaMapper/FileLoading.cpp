@@ -85,6 +85,10 @@ bool LEVEL_DATA::loadFile(std::string path)
 {
 	// close file to prevent any read access related errors
 	closeFile();
+
+	// reset initalization flag
+	initalized = false;
+
 	RWops = SDL_RWFromFile(path.c_str(), "r+b");
 	if (RWops == NULL) {
 		SDL_LogError(0, "SDL could not open the file '%s'! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -159,6 +163,9 @@ bool LEVEL_DATA::loadFile(std::string path)
 					SDL_LogError(0, "Could not read the level file!\n");
 					return false;
 				}
+				else {
+					initalized = true;
+				}
 				return true;
 			}
 		}
@@ -223,5 +230,5 @@ bool LEVEL_DATA::readFile()
 		}
 	}
 
-	return false;
+	return true;
 }

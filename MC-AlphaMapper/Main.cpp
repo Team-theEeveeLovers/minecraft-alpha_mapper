@@ -248,7 +248,7 @@ int main(int argc, char* argv[]) {
 					main_gui.renderPresent();
 					main_renderer.renderPresent();
 					if (!currentLVLFile.loadFile(selectedfilepath)) {
-						//SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, ("Couldn't open file " + selectedfilepath).c_str(), ("SDL2 Error: " + std::string(SDL_GetError())).c_str(), main_window);
+						SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "An error occured!", ("Couldn't open file " + selectedfilepath + "\nPlease check log for issue!").c_str(), main_window);
 					}
 					else {
 

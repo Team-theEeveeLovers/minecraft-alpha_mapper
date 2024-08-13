@@ -198,7 +198,7 @@ bool LEVEL_DATA::readFile()
 {
 
 	// make a buffer for data reading and processing
-	BYTE dataBuffer[8];
+	BYTE dataBuffer[10];
 
 	// Initial read
 	if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 1) == 0) {
@@ -227,6 +227,43 @@ bool LEVEL_DATA::readFile()
 		if (root.NameLength != 0) {
 			throw std::invalid_argument("Error: not a valid NBT file!");
 			return false;
+		}
+
+		// read more
+		if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 3) == 0) {
+			throw std::invalid_argument("Error: invalid length level file!");
+			return false;
+		}
+
+		// find Data tag
+		if (dataBuffer[0] != 0x0A) {
+			throw std::invalid_argument("Error: Invalid level file!");
+			return false;
+		}
+		else {
+			// copy two Uint8s to Uint16 value
+			NameLength_Pointer = &data.NameLength;
+
+			// copy value in reverse order because different endianness
+			memcpy(NameLength_Pointer, &dataBuffer[2], 1);
+			memcpy(NameLength_Pointer + 1, &dataBuffer[1], 1);
+
+			if (data.NameLength != 4) {
+				throw std::invalid_argument("Error: not a valid level file!");
+				return false;
+			}
+			else {
+				// read name
+				if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 4) == 0) {
+					throw std::invalid_argument("Error: invalid length NBT tag!");
+					return false;
+				}
+				// null terminator to prevent corrupt
+				dataBuffer[4] = 0x00;
+				// add to name
+				data.Name.append(reinterpret_cast<char*>(dataBuffer));
+				
+			}
 		}
 	}
 

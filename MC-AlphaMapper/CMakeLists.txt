@@ -13,7 +13,6 @@ endif()
 
 # COPY DLLs
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-
 	# SDL2
 	add_custom_command(
 	TARGET MC_Alpha_Mapper POST_BUILD

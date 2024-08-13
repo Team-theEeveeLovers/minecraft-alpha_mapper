@@ -2,7 +2,6 @@
 #include "globals.h"
 #include "Types/NBT.h"
 #include <zlib.h>
-#include <zconf.h>
 
 #ifndef ZLIB_CONST
 #define ZLIB_CONST

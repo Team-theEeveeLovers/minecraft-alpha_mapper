@@ -154,6 +154,7 @@ void LEVEL_DATA::closeFile(void)
 {
 	if (RWops != NULL)
 		SDL_RWclose(RWops);
+
 	if (out_RWops != NULL)
 		SDL_RWclose(out_RWops);
 }

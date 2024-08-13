@@ -7,7 +7,7 @@
 
 
 
-int screen_width = 640, screen_height = 480;
+int screen_width = 854, screen_height = 480;
 
 WINDOW main_window;
 RENDERER main_renderer;

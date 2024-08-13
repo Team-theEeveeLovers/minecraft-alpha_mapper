@@ -1,3 +1,6 @@
+#pragma once
+#include <vector>
+
 #define BYTE Uint8
 #define SHORT short
 #define INT Sint32
@@ -31,10 +34,16 @@ class tag {
 public:
 	// the type of the tag
 	tagType Type;
+
+	// the length of the tag's name
+	Uint16 NameLength;
 	// the name of the tag
 	std::string Name;
-	// the length of the tag's name
-	BYTE NameLength;
+
+	// the start position of the tag in the file
+	Uint64 start;
+	// the end position of the tag in the file
+	Uint64 end;
 };
 
 class ByteTag : public tag {
@@ -68,4 +77,12 @@ class StringTag : public tag {
 
 	// the UTF-8 string contained within
 	std::string value;
+};
+
+/**
+ * @brief A sequential list of Named Tags. This array keeps going until a TAG_End is found.
+ */
+class CompoundTag : public tag {
+	// the tag is string type
+	tagType Type = tagType::TAG_Compound;
 };

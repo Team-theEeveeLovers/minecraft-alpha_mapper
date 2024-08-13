@@ -198,7 +198,7 @@ bool LEVEL_DATA::readFile()
 {
 
 	// make a buffer for data reading and processing
-	BYTE dataBuffer[10];
+	BYTE dataBuffer[16];
 
 	// Initial read
 	if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 1) == 0) {

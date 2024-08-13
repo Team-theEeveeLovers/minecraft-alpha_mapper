@@ -143,7 +143,22 @@ bool LEVEL_DATA::loadFile(std::string path)
 			else {
 				SDL_RWwrite(out_RWops, decompressed_data.data(), decompressed_data.size(), 1);
 				SDL_RWclose(out_RWops);
+
+				// free memory as file now has data
+				decompressed_data.clear();
+
+
 				out_RWops = SDL_RWFromFile(outPath.c_str(), "r+");
+				if (out_RWops == NULL) {
+					SDL_LogError(0, "SDL could not reopen out file! SDL Error: %s\n", SDL_GetError());
+					ASSERT(false && "Could not reopen out file!");
+					return false;
+				}
+
+				if (!readFile()) {
+					SDL_LogError(0, "Could not read the level file!\n");
+					return false;
+				}
 				return true;
 			}
 		}
@@ -170,4 +185,43 @@ bool LEVEL_DATA::checkGZheader(Uint8* bytes)
 		return false;
 	else
 		return true;
+}
+
+bool LEVEL_DATA::readFile()
+{
+
+	// make a buffer for data reading and processing
+	BYTE dataBuffer[8];
+
+	// Initial read
+	if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 1) == 0) {
+		throw std::invalid_argument("Error: Zero-length level file!");
+		return false;
+	}
+
+	// find root tag
+	if (dataBuffer[0] != 0x0A) {
+		throw std::invalid_argument("Error: Invalid level file!");
+		return false;
+	}
+	else {
+		// read again
+		if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 2) == 0) {
+			throw std::invalid_argument("Error: invalid length level file!");
+			return false;
+		}
+		// copy two Uint8s to Uint16 value
+		Uint16* NameLength_Pointer = &root.NameLength;
+
+		// copy value in reverse order because different endianness
+		memcpy(NameLength_Pointer, &dataBuffer[1], 1);
+		memcpy(NameLength_Pointer+1, &dataBuffer[0], 1);
+		
+		if (root.NameLength != 0) {
+			throw std::invalid_argument("Error: not a valid NBT file!");
+			return false;
+		}
+	}
+
+	return false;
 }

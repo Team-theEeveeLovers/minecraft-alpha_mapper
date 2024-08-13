@@ -40,6 +40,13 @@ protected:
 	SDL_RWops* out_RWops = NULL;
 	// the Gzip compressed data in the file
 	std::string compressedData;
+
+	// the root tag
+	CompoundTag root;
+	// Global level data
+	CompoundTag data;
+	// the last time the world was played
+	LongTag lastPlay;
 	// the seed of the world
 	LongTag seed;
 
@@ -49,9 +56,19 @@ protected:
 	 * @return True if valid, false if invalid
 	 */
 	bool checkGZheader(Uint8 *bytes);
+
+	/**
+	 * @brief INTERNAL FUNCTION: Reads data from the file
+	 * @return True on success, or false on failure
+	 */
+	bool readFile();
 };
 
 class CHUNK_DATA {
 protected:
+	// the root tag
+	CompoundTag root;
+
+	// the tick when the chunk was last updated
 	LongTag lastUpdate;
 };

@@ -6,7 +6,10 @@
 #define DOUBLE double
 
 
-
+/**
+ * @brief An enum representing the types of NBT tags.
+ * Made according to https://web.archive.org/web/20110723210920/http://www.minecraft.net/docs/NBT.txt
+ */
 enum class tagType : BYTE {
 	TAG_End = 0x00,
 	TAG_Byte = 0x01,

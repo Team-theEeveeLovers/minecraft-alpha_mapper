@@ -14,10 +14,7 @@
 * @date August 6th, 2024
 */
 
-/**
- * @brief An enum representing the types of NBT tags. 
- * Made according to https://web.archive.org/web/20110723210920/http://www.minecraft.net/docs/NBT.txt
- */
+
 
 
 /**

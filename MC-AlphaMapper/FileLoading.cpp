@@ -110,10 +110,15 @@ bool LEVEL_DATA::loadFile(std::string path)
 				SDL_RWread(RWops, &char_to_buffer, sizeof(char), 1);
 				//if (char_to_buffer == '\0')
 				//	char_to_buffer = 0xFF;
-
+				//
 				//read_buffer[i] = char_to_buffer;
-				if (char_to_buffer[0] == '\0')
-					compressedData.append("\n");
+
+
+				// check if the value is NULL because it would be considered a terminator by the append function
+				// we use a count value of 1 to force the append function to add the NULL terminator
+				// TODO: Use the count value in the normal append to remove the need for the if statement
+				if (char_to_buffer[0] == '\0') 
+					compressedData.append("\0", 1);
 				else
 					compressedData.append(&char_to_buffer[0]);
 			}

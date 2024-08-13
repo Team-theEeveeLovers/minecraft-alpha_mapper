@@ -252,6 +252,26 @@ int main(int argc, char* argv[]) {
 					}
 					else {
 
+						// POST LOAD: Draw new frame
+
+						if (draw != 0x00 && !drawIncrementing) {
+							draw--;
+						}
+						else if (draw != 0xFF && drawIncrementing) {
+							draw++;
+						}
+						else {
+							drawIncrementing = !drawIncrementing;
+							if (drawIncrementing)
+								draw++;
+							else
+								draw--;
+						}
+
+						main_renderer.setDrawColor(draw, draw, draw);
+						main_renderer.renderClear();
+
+						main_renderer.renderPresent();
 					}
 				}
 

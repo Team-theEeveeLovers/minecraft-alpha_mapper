@@ -23,7 +23,7 @@
 class LEVEL_DATA {
 private:
 	// File signature using unused padding space in memory caused by alignment
-	char signature[7] = { '\0', 'L', 'V', 'L', 'd', ' t', '\0' };
+	char signature[7] = { '\0', 'L', 'V', 'L', 'd', 't', '\0' };
 public:
 	// Is the file loaded?
 	bool initalized = false;

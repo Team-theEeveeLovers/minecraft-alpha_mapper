@@ -4,7 +4,7 @@
 #define BYTE Uint8
 #define SHORT short
 #define INT Sint32
-#define LONG long long // we are using long long here because normal long is 32-bit according to the standard but Java longs are 64-bit and long long is 64-bit
+#define LONG Sint64 
 #define FLOAT float
 #define DOUBLE double
 

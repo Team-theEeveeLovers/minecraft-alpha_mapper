@@ -3,7 +3,7 @@
 #include "Renderer.hpp"
 #include "Gui.hpp"
 #include "FileLoading.hpp"
-
+#include "Types/Time.h"
 
 
 
@@ -14,6 +14,7 @@ RENDERER main_renderer;
 ImGui_CONTEXT main_gui;
 
 LEVEL_DATA currentLVLFile;
+Time LevelLastPlay;
 
 bool initMain() {
 	bool success = true;
@@ -214,6 +215,15 @@ int main(int argc, char* argv[]) {
 					{
 						SDL_Log("Nothing happened!\n");
 					}
+
+					if (currentLVLFile.initalized) {
+						ImGui::NewLine();
+						ImGui::NewLine();
+						ImGui::Text("Open File:");
+						ImGui::NewLine();
+						ImGui::Text("Last Play Time: %d/%d/%d", LevelLastPlay.toMonth(), LevelLastPlay.toDay(), LevelLastPlay.toYear());
+						ImGui::SameLine(); ImGui::Text("at %d:%d:%d UTC", LevelLastPlay.toHour(), LevelLastPlay.toMinute(), LevelLastPlay.toSecond());
+					}
 				}
 				ImGui::End();
 				
@@ -272,6 +282,8 @@ int main(int argc, char* argv[]) {
 						main_renderer.renderClear();
 
 						main_renderer.renderPresent();
+
+						LevelLastPlay.unixTime = currentLVLFile.getLastPlayTime().value;
 					}
 				}
 

@@ -68,7 +68,7 @@ class LongTag : public tag {
 	// we are using long long here because normal long is 32-bit but Java longs are 64-bit
 
 	// the long value contained within the tag 
-	long long value = 0x00i64;
+	Sint64 value = 0x00i64;
 };
 
 class StringTag : public tag {

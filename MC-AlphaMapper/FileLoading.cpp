@@ -176,6 +176,7 @@ void LEVEL_DATA::closeFile(void)
 {
 	if (RWops != NULL)
 		SDL_RWclose(RWops);
+	
 
 	if (out_RWops != NULL)
 		SDL_RWclose(out_RWops);
@@ -263,6 +264,51 @@ bool LEVEL_DATA::readFile()
 				// add to name
 				data.Name.append(reinterpret_cast<char*>(dataBuffer));
 				
+				// read again
+				if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 3) == 0) {
+					throw std::invalid_argument("Error: invalid length level file!");
+					return false;
+				}
+				// Find last playtime
+				if (dataBuffer[0] == 0x04) {
+					// copy two Uint8s to Uint16 value
+					NameLength_Pointer = &lastPlay.NameLength;
+
+					// copy value in reverse order because different endianness
+					memcpy(NameLength_Pointer, &dataBuffer[2], 1);
+					memcpy(NameLength_Pointer + 1, &dataBuffer[1], 1);
+
+					if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), lastPlay.NameLength) == 0) {
+						throw std::invalid_argument("Error: invalid length level file!");
+						return false;
+					}
+					else {
+						// null terminator to prevent corrupt
+						dataBuffer[10] = 0x00;
+						// add to name
+						lastPlay.Name.append(reinterpret_cast<char*>(dataBuffer));
+
+						if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 8) == 0) {
+							throw std::invalid_argument("Error: invalid length long tag!");
+							return false;
+						}
+						else {
+							Sint64* longValue_PTR = &lastPlay.value;
+							Uint8* casted_longValue_PTR = reinterpret_cast<Uint8*>(longValue_PTR); // cast because adding to the pointer increments in 8 byte segments
+
+							// copy value in reverse order because different endianness
+							memcpy(casted_longValue_PTR + 0, &dataBuffer[7], sizeof(BYTE));
+							memcpy(casted_longValue_PTR + 1, &dataBuffer[6], sizeof(BYTE));
+							memcpy(casted_longValue_PTR + 2, &dataBuffer[5], sizeof(BYTE));
+							memcpy(casted_longValue_PTR + 3, &dataBuffer[4], sizeof(BYTE));
+							memcpy(casted_longValue_PTR + 4, &dataBuffer[3], sizeof(BYTE));
+							memcpy(casted_longValue_PTR + 5, &dataBuffer[2], sizeof(BYTE));
+							memcpy(casted_longValue_PTR + 6, &dataBuffer[1], sizeof(BYTE));
+							memcpy(casted_longValue_PTR + 7, &dataBuffer[0], sizeof(BYTE));
+						}
+					}
+				}
+
 			}
 		}
 	}

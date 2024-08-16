@@ -39,6 +39,9 @@ public:
 	 * @brief Closes the file stream and frees memory
 	 */
 	void closeFile(void);
+
+	inline LongTag getLastPlayTime() { return lastPlay; }
+
 protected:
 	// the input file stream context
 	SDL_RWops* RWops = NULL;

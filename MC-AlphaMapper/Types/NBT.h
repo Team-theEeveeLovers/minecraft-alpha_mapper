@@ -49,6 +49,7 @@ public:
 class ByteTag : public tag {
 	// the tag is byte type
 	tagType Type = tagType::TAG_Byte;
+public:
 	// the byte value contained within the tag
 	BYTE value = 0x00;
 };
@@ -56,6 +57,7 @@ class ByteTag : public tag {
 class ShortTag : public tag {
 	// the tag is short type
 	tagType Type = tagType::TAG_Short;
+public:
 	// the byte value contained within the tag
 	SHORT value = 0x00;
 };
@@ -68,13 +70,14 @@ class LongTag : public tag {
 	// we are using long long here because normal long is 32-bit but Java longs are 64-bit
 
 	// the long value contained within the tag 
+public:
 	Sint64 value = 0x00i64;
 };
 
 class StringTag : public tag {
 	// the tag is string type
 	tagType Type = tagType::TAG_String;
-
+public:
 	// the UTF-8 string contained within
 	std::string value;
 };

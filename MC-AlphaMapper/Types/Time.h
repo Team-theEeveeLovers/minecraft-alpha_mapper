@@ -81,7 +81,7 @@ public:
 	Sint64 toYear() const {
 		Sint64 years = toYears();
 
-		return (1970 + years + 1);
+		return (1970 + years);
 	}
 
 	/**

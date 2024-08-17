@@ -171,12 +171,14 @@ bool LEVEL_DATA::loadFile(std::string path)
 
 void LEVEL_DATA::closeFile(void)
 {
-	if (RWops != NULL)
+	if (RWops != NULL) 
 		SDL_RWclose(RWops);
+
 	
 
-	if (out_RWops != NULL)
+	if (out_RWops != NULL && out_RWops->close != NULL) 
 		SDL_RWclose(out_RWops);
+
 
 	// reset initalization flag
 	initalized = false;

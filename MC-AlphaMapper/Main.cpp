@@ -123,6 +123,22 @@ void exitMain()
 	std::cout << std::endl << std::endl << "Goodbye!" << std::endl << std::endl;
 }
 
+/**
+ * @brief Shows this program's about menu
+ * @param open - A pointer to a bool which will be set to false when the window is closed. If set to NULL (or not set at all), the window's close button will not show.
+ */
+void showAboutMenu(bool* open = (bool*)0) {
+	if (!ImGui::Begin("About MC Alpha Mapper", open, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::End();
+		return;
+	}
+	ImGui::Text("Coming soon!");
+
+	ImGui::NewLine(); ImGui::Text("While you wait, why not check out the ");
+	ImGui::TextLinkOpenURL("GitHub Page", "https://github.com/Team-theEeveeLovers/minecraft-alpha_mapper");
+	ImGui::End();
+}
+
 int main(int argc, char* argv[]) {
 	if (!initMain()) {
 		std::cout << std::endl << "Initalization Failed." << std::endl;
@@ -143,6 +159,8 @@ int main(int argc, char* argv[]) {
 		bool metrWindowOpen = false;
 		// Is the About ImGui window open?
 		bool abutWindowOpen = false;
+		// Is the About MC Alpha Mapper window open?
+		bool abutMCWindowOpen = false;
 
 		// is the value in draw incrementing or decrementing?
 		bool drawIncrementing = false;
@@ -205,7 +223,7 @@ int main(int argc, char* argv[]) {
 						if (ImGui::BeginMenu("Help")) {
 							if (ImGui::MenuItem("User Guide", "(Coming Soon!)", false, false)) {}
 							if (ImGui::MenuItem("About ImGui", NULL, abutWindowOpen)) { abutWindowOpen = !abutWindowOpen; }
-							if (ImGui::MenuItem("About MC Alpha Mapper", "(Coming Soon!)", false, false)) {}
+							if (ImGui::MenuItem("About MC Alpha Mapper", "(W.I.P)", abutMCWindowOpen)) { abutMCWindowOpen = !abutMCWindowOpen; }
 							ImGui::EndMenu();
 						}
 						ImGui::EndMenuBar();
@@ -233,6 +251,8 @@ int main(int argc, char* argv[]) {
 					ImGui::ShowMetricsWindow(&metrWindowOpen);
 				if (abutWindowOpen)
 					ImGui::ShowAboutWindow(&abutWindowOpen);
+				if (abutMCWindowOpen)
+					showAboutMenu(&abutMCWindowOpen);
 
 				fileDialog.Display();
 

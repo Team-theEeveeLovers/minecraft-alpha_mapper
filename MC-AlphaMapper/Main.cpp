@@ -182,6 +182,22 @@ int main(int argc, char* argv[]) {
 			while (SDL_PollEvent(&e)) { 
 				main_gui.processEvents(&e);
 				if (e.type == SDL_QUIT) quit = true; 
+
+				if (e.type == SDL_KEYDOWN) {
+					const Uint8* keyStates = SDL_GetKeyboardState(NULL);
+					bool ControlPressed = (keyStates[SDL_SCANCODE_LCTRL] || keyStates[SDL_SCANCODE_RCTRL]);
+
+					switch (e.key.keysym.sym) {
+					case SDLK_o:
+						if (ControlPressed)
+							fileDialog.Open();
+						break;
+					case SDLK_w:
+						if (ControlPressed && currentLVLFile.initalized)
+							currentLVLFile.closeFile();
+						break;
+					}
+				}
 			}
 			// if the above hasn't resulted in exiting
 			if (!quit) {
@@ -207,11 +223,19 @@ int main(int argc, char* argv[]) {
 				if (ImGui::Begin("Operations", NULL, ImGuiWindowFlags_MenuBar)) {
 					if (ImGui::BeginMenuBar()) {
 						if (ImGui::BeginMenu("File")) {
-							if (ImGui::MenuItem("Open")) { fileDialog.Open(); }
+
+
+							if (ImGui::MenuItem("Open", "Ctrl+O")) { fileDialog.Open(); }
+
 							if (ImGui::MenuItem("Save", "(Coming Soon!)", false, false)) {}
+
 							if (ImGui::MenuItem("Save As...", "(Coming Soon!)", false, false)) {}
-							if (ImGui::MenuItem("Close File", nullptr, nullptr, currentLVLFile.initalized)) { currentLVLFile.closeFile(); }
+
+							if (ImGui::MenuItem("Close File", "Ctrl+W", nullptr, currentLVLFile.initalized)) { currentLVLFile.closeFile(); }
+
 							if (ImGui::MenuItem("Exit", "Alt+F4")) { quit = true; }
+
+
 							ImGui::EndMenu();
 						}
 						if (ImGui::BeginMenu("Tools")) {

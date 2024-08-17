@@ -86,9 +86,6 @@ bool LEVEL_DATA::loadFile(std::string path)
 	// close file to prevent any read access related errors
 	closeFile();
 
-	// reset initalization flag
-	initalized = false;
-
 	RWops = SDL_RWFromFile(path.c_str(), "r+b");
 	if (RWops == NULL) {
 		SDL_LogError(0, "SDL could not open the file '%s'! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -180,6 +177,10 @@ void LEVEL_DATA::closeFile(void)
 
 	if (out_RWops != NULL)
 		SDL_RWclose(out_RWops);
+
+	// reset initalization flag
+	initalized = false;
+
 }
 
 bool LEVEL_DATA::checkGZheader(Uint8* bytes)

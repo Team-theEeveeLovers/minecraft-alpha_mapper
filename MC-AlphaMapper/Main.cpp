@@ -192,7 +192,7 @@ int main(int argc, char* argv[]) {
 							if (ImGui::MenuItem("Open")) { fileDialog.Open(); }
 							if (ImGui::MenuItem("Save", "(Coming Soon!)", false, false)) {}
 							if (ImGui::MenuItem("Save As...", "(Coming Soon!)", false, false)) {}
-							if (ImGui::MenuItem("Close File", "(Coming Soon!)", false, false)) {}
+							if (ImGui::MenuItem("Close File", nullptr, nullptr, currentLVLFile.initalized)) { currentLVLFile.closeFile(); }
 							if (ImGui::MenuItem("Exit", "Alt+F4")) { quit = true; }
 							ImGui::EndMenu();
 						}

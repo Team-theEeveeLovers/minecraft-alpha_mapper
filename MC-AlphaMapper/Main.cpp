@@ -5,7 +5,7 @@
 #include "FileLoading.hpp"
 #include "Types/Time.h"
 
-
+const char* MC_MAPPER_VERSION = "Alpha 0.0.1";
 
 int screen_width = 854, screen_height = 480;
 
@@ -20,7 +20,7 @@ bool initMain() {
 	bool success = true;
 
 	std::cout << "Minecraft Alpha Level Mapper by TtEL" << std::endl;
-	std::cout << "Software Version: Alpha 0.0.1" << std::endl << std::endl;
+	std::cout << "Software Version: " << MC_MAPPER_VERSION << std::endl << std::endl;
 	//Initialize SDL
 	std::cout << "Initalizing SDL... ";
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -132,10 +132,25 @@ void showAboutMenu(bool* open = (bool*)0) {
 		ImGui::End();
 		return;
 	}
-	ImGui::Text("Coming soon!");
+	ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Minecraft Alpha Mapper");
+	ImGui::SameLine(); ImGui::TextColored(ImVec4(0.5f, 0.5f, 0.5f, 1.0f), "version %s", MC_MAPPER_VERSION);
+	ImGui::TextColored(ImVec4(0.3f, 0.8f, 0.3f, 1.0f), "by TtEL");
+	ImGui::TextLinkOpenURL("GitHub", "https://github.com/Team-theEeveeLovers/minecraft-alpha_mapper");
 
-	ImGui::NewLine(); ImGui::Text("While you wait, why not check out the ");
-	ImGui::TextLinkOpenURL("GitHub Page", "https://github.com/Team-theEeveeLovers/minecraft-alpha_mapper");
+	ImGui::Separator();
+	ImGui::NewLine();
+
+
+
+	ImGui::Indent();
+	ImGui::SeparatorText("About");
+	ImGui::Unindent();
+
+	ImGui::TextWrapped("Minecraft Alpha Mapper is a very incomplete program for mapping Minecraft worlds saved using the Alpha Level Format.");
+	ImGui::TextWrapped("This format was first used in Infdev 20100327 and was used up to Beta 1.2_02, after which the MC Region format became the standard. A notable exception occured with Infdev 20100624 where a new save format was used. However, it was immediately scrapped afterward due to immensely increased filesize.");
+
+
+
 	ImGui::End();
 }
 

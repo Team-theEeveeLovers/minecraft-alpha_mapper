@@ -7,7 +7,7 @@
 
 const char* MC_MAPPER_VERSION = "Alpha 0.0.1";
 
-int screen_width = 854, screen_height = 480;
+int screen_width = 854 * 2, screen_height = 480 * 2;
 
 WINDOW main_window;
 RENDERER main_renderer;

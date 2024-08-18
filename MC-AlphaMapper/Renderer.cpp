@@ -88,6 +88,46 @@ void RENDERER::renderTexture(SDL_Texture* textre, SDL_Rect sourceRect, SDL_Rect 
 	}
 }
 
+void RENDERER::renderRect(SDL_Rect* rect)
+{
+	if (!checkRenderer()) {
+		throw std::invalid_argument("Tried to render a rectangle using an invalid renderer!");
+	}
+	else {
+		SDL_RenderDrawRect(SDLR, rect);
+	}
+}
+
+void RENDERER::renderRect(SDL_Rect rect)
+{
+	if (!checkRenderer()) {
+		throw std::invalid_argument("Tried to render a rectangle using an invalid renderer!");
+	}
+	else {
+		SDL_RenderDrawRect(SDLR, &rect);
+	}
+}
+
+void RENDERER::fillRect(SDL_Rect* rect)
+{
+	if (!checkRenderer()) {
+		throw std::invalid_argument("Tried to render a rectangle using an invalid renderer!");
+	}
+	else {
+		SDL_RenderFillRect(SDLR, rect);
+	}
+}
+
+void RENDERER::fillRect(SDL_Rect rect)
+{
+	if (!checkRenderer()) {
+		throw std::invalid_argument("Tried to render a rectangle using an invalid renderer!");
+	}
+	else {
+		SDL_RenderFillRect(SDLR, &rect);
+	}
+}
+
 void RENDERER::renderPresent()
 {
 	if (!checkRenderer()) {

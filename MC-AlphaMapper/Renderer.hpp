@@ -80,6 +80,28 @@ public:
 	 */
 	void renderTexture(SDL_Texture* textre, SDL_Rect sourceRect = {0,0,0,0}, SDL_Rect destinationRect = { 0,0,0,0 });
 
+	/**
+	* @brief Renders a rectangle to the screen
+	* @param rect - a pointer to the rectangle to render
+	 */
+	void renderRect(SDL_Rect* rect);
+	/**
+	 * @brief Renders a rectangle to the screen
+	 * @param rect - the rectangle to render
+	 */
+	void renderRect(SDL_Rect rect);
+
+	/**
+	* @brief Renders and fills a rectangle to the screen
+	* @param rect - a pointer to the rectangle to render
+	*/
+	void fillRect(SDL_Rect* rect);
+	/**
+	* @brief Renders and fills a rectangle to the screen
+	* @param rect - the rectangle to render
+	*/
+	void fillRect(SDL_Rect rect);
+
 	// renders everything that is currently buffered
 	void renderPresent();
 

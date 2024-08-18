@@ -318,3 +318,56 @@ bool LEVEL_DATA::readFile()
 
 	return true;
 }
+
+bool CHUNK_DATA::loadFile(std::string path)
+{
+	RWops = SDL_RWFromFile(path.c_str(), "r+b");
+	if (RWops == NULL) {
+		SDL_LogError(0, "SDL could not open the file '%s'! SDL Error: %s\n", path.c_str(), SDL_GetError());
+		return false;
+	}
+	std::string compressedData;
+
+	char char_to_buffer[2] = { '\0', '\0' };
+	for (int i = 0; i < SDL_RWsize(RWops); i++) {
+		SDL_RWread(RWops, &char_to_buffer, sizeof(char), 1);
+
+		compressedData.append(&char_to_buffer[0], 1);
+	}
+
+	SDL_RWclose(RWops); // close the stream for right now as we don't need to write anything yet
+
+	std::string decompressed_data;
+	if (!gzipInflate(compressedData, decompressed_data)) {
+		ASSERT(false && "Could not uncompress!");
+		return false;
+	}
+
+	std::string outPath = path.append("_temp");
+	out_RWops = SDL_RWFromFile(outPath.c_str(), "w+");
+	if (out_RWops == NULL) {
+		SDL_LogError(0, "SDL could not make new temp file '%s'! SDL Error: %s\n", outPath.c_str(), SDL_GetError());
+		return false;
+	}
+
+	int blocksStart = decompressed_data.find("Blocks");
+
+	SDL_RWwrite(out_RWops, decompressed_data.data(), decompressed_data.size(), 1);
+	SDL_RWclose(out_RWops);
+
+	// free memory as file now has data
+	compressedData.clear();
+	decompressed_data.clear();
+
+	out_RWops = SDL_RWFromFile(outPath.c_str(), "r+");
+	if (out_RWops == NULL) {
+		SDL_LogError(0, "SDL could not reopen out file! SDL Error: %s\n", SDL_GetError());
+		ASSERT(false && "Could not reopen out file!");
+		return false;
+	}
+
+	SDL_RWseek(out_RWops, blocksStart + 6 + 4, RW_SEEK_SET);
+	SDL_RWread(out_RWops, &Blocks, sizeof(BYTE), 32768);
+
+	return true;
+}

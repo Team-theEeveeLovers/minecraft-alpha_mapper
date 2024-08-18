@@ -16,6 +16,8 @@ ImGui_CONTEXT main_gui;
 LEVEL_DATA currentLVLFile;
 Time LevelLastPlay;
 
+CHUNK_DATA spawn;
+
 bool initMain() {
 	bool success = true;
 
@@ -304,6 +306,7 @@ int main(int argc, char* argv[]) {
 					main_gui.newFrame();
 
 					selectedfilepath = fileDialog.GetSelected().string();
+					std::string containingDirectory = fileDialog.GetSelected().parent_path().string();
 					fileDialog.ClearSelected();
 
 					const ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -343,6 +346,9 @@ int main(int argc, char* argv[]) {
 						main_renderer.renderPresent();
 
 						LevelLastPlay.unixTime = currentLVLFile.getLastPlayTime().value;
+
+						std::string spawnChunkPath = containingDirectory.append("\\0\\0\\c.0.0.dat");
+						spawn.loadFile(spawnChunkPath);
 					}
 				}
 

@@ -51,6 +51,7 @@ bool initMain() {
 				}
 				else {
 					std::cout << "Successfully created renderer." << std::endl << std::endl;
+					SDL_SetRenderDrawBlendMode(main_renderer, SDL_BLENDMODE_BLEND);
 					if (!main_gui.initalizeForSDL2(main_window, main_renderer)) {
 						SDL_LogError(0, "ImGui SDL2 backend could not initialize!\n\n");
 						success = false;
@@ -156,6 +157,123 @@ void showAboutMenu(bool* open = (bool*)0) {
 	ImGui::End();
 }
 
+
+void renderBlockAsRect(BYTE blockID, int x, int y = 0) {
+	SDL_Rect drawingRect = { 4+(16 * x), 4+(16 * y), 16, 16 };
+	switch (blockID) {
+	case AIR:
+		main_renderer.setDrawColor(0xB1, 0xEB, 0xF1, 0x99);
+		break;
+	case STONE:
+		main_renderer.setDrawColor(0x55, 0x55, 0x55);
+		break;
+	case GRASS:
+		main_renderer.setDrawColor(0x00, 0xFF, 0x77);
+		break;
+	case DIRT:
+		main_renderer.setDrawColor(0x5E, 0x3E, 0x07);
+		break;
+	case BEDROCK:
+		main_renderer.setDrawColor(0x11, 0x11, 0x11);
+		break;
+	case SNOW_LAYER:
+		main_renderer.setDrawColor(0xEE, 0xEE, 0xFF);
+		break;
+	default:
+		main_renderer.setDrawColor(0xFF, 0xAA, 0xFF);
+		break;
+	}
+	int screenWidth = screen_width;
+	if (screenWidth % 16 != 0) 
+		screenWidth -= (screenWidth % 16);
+
+	if (drawingRect.x > 2048) {
+		int tempX = drawingRect.x;
+		while (tempX > 2048) {
+			drawingRect.y += 16;
+			tempX -= 2048;
+		}
+		drawingRect.x = tempX;
+	}
+
+	// blocks with "texture"
+	if (blockID == TORCH) {
+		drawingRect.h = 4;
+		drawingRect.w = 6;
+
+		drawingRect.x += 6;
+
+		main_renderer.setDrawColor(0xFF, 0xE9, 0x57);
+		main_renderer.fillRect(&drawingRect);
+
+		drawingRect.h = 12;
+		drawingRect.y += 4;
+		main_renderer.setDrawColor(0x57, 0x3C, 0x08);
+		main_renderer.fillRect(&drawingRect);
+	}
+	else if (blockID == GRASS) {
+		// top layer
+		drawingRect.h = 4;
+		main_renderer.setDrawColor(0x00, 0xFF, 0x77);
+		main_renderer.fillRect(&drawingRect);
+
+		// bottom layer
+		drawingRect.h = 12;
+		drawingRect.y += 4;
+		main_renderer.setDrawColor(0x5E, 0x3E, 0x07);
+		main_renderer.fillRect(&drawingRect);
+
+	}
+	else if (blockID == GRAVEL) {
+
+		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
+		main_renderer.fillRect(&drawingRect);
+
+		// dots
+		main_renderer.setDrawColor(0x5E, 0x5E, 0x5E, 0x5E);
+		main_renderer.fillRect({ drawingRect.x + 2, drawingRect.y + 2, 4, 4 });
+		main_renderer.fillRect({ drawingRect.x + 10, drawingRect.y + 10, 4, 4 });
+
+		main_renderer.setDrawColor(0x5E, 0x5E, 0x5E, 0x85);
+		main_renderer.fillRect({ drawingRect.x + 3, drawingRect.y + 9, 4, 4 });
+
+	}
+	else if (blockID == IRON_ORE) {
+
+		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
+		main_renderer.fillRect(&drawingRect);
+
+		// dots
+		main_renderer.setDrawColor(0xCC, 0x90, 0x7C, 0xCC);
+		main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
+		main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
+	}
+	else if (blockID == COAL_ORE) {
+
+		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
+		main_renderer.fillRect(&drawingRect);
+
+		// dots
+		main_renderer.setDrawColor(0x22, 0x22, 0x22, 0xCC);
+		main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
+		main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
+	}
+	else if (blockID == REDSTONE_ORE) {
+
+		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
+		main_renderer.fillRect(&drawingRect);
+
+		// dots
+		main_renderer.setDrawColor(0xFF, 0x22, 0x22, 0xCC);
+		main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
+		main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
+	}
+	else {
+		if (blockID == SNOW_LAYER) { drawingRect.h = 8; drawingRect.y += 8; }
+		main_renderer.fillRect(&drawingRect);
+	}
+}
+
 int main(int argc, char* argv[]) {
 	if (!initMain()) {
 		std::cout << std::endl << "Initalization Failed." << std::endl;
@@ -218,6 +336,7 @@ int main(int argc, char* argv[]) {
 			}
 			// if the above hasn't resulted in exiting
 			if (!quit) {
+				if (!currentLVLFile.initalized) {
 					if (draw != 0x00 && !drawIncrementing) {
 						draw--;
 					}
@@ -231,8 +350,16 @@ int main(int argc, char* argv[]) {
 						else
 							draw--;
 					}
-				
-				main_renderer.setDrawColor(draw, draw, draw);
+				}
+				else {
+					draw = 0xFB;
+				}
+				if (!currentLVLFile.initalized) {
+					main_renderer.setDrawColor(draw, draw, draw);
+				}
+				else {
+					main_renderer.setDrawColor(0x00, 0xFB, 0xFF);
+				}
 				main_renderer.renderClear();
 				main_gui.newFrame();
 
@@ -285,6 +412,13 @@ int main(int argc, char* argv[]) {
 					}
 				}
 				ImGui::End();
+
+				if (currentLVLFile.initalized) {
+					for (int i = 0; i < 1536; i++) {
+						Byte curBlock = spawn.Blocks[i];
+						renderBlockAsRect(curBlock, i);
+					}
+				}
 				
 				if (demoWindowOpen)
 					ImGui::ShowDemoWindow(&demoWindowOpen);

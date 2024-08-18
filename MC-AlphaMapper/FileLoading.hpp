@@ -19,7 +19,7 @@
 /**
  * @brief An enum representing blocks by their ID
  */
-enum class Block : BYTE {
+enum Block : BYTE {
 	AIR = 0x00,
 	STONE = 0x01,
 	GRASS = 0x02,

@@ -17,7 +17,7 @@ private:
 	// INTERNAL FUNCTION: check if the current render is valid, if not, returns false
 	bool checkRenderer();
 public:
-
+	/// BASE FUNCTIONS
 	// function to convert to SDL_Renderer*
 	operator SDL_Renderer* () { return SDLR; };
 
@@ -37,6 +37,21 @@ public:
 	 */
 	bool createRenderer(WINDOW window, Uint32 flags = SDL_RENDERER_SOFTWARE, int index = -1);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/// DRAWING FUNCTIONS
 	/**
 	 * @brief Sets the drawing color of the renderer
 	 * @param red - the red component of the draw color
@@ -49,10 +64,47 @@ public:
 	// clears the backbuffer of the renderer using the draw color, starting a new frame
 	void renderClear();
 
+	/**
+	 * @brief Renders a texture to the screen
+	 * @param textre - The texture to render
+	 * @param sourceRect - A clipping rect for cropping the texture, or NULL to use the whole texture
+	 * @param destinationRect - A rect in screenspace to draw the texture to, or NULL for the whole screen. The texture will be stretched to the rectangle.
+	 */
+	void renderTexture(SDL_Texture* textre, SDL_Rect* sourceRect = NULL, SDL_Rect* destinationRect = NULL);
+
+	/**
+	 * @brief Renders a texture to the screen
+	 * @param textre - The texture to render
+	 * @param sourceRect - A clipping rect for cropping the texture, or {0,0,0,0} to use the whole texture
+	 * @param destinationRect - A rect in screenspace to draw the texture to, or {0,0,0,0} for the whole screen. The texture will be stretched to the rectangle.
+	 */
+	void renderTexture(SDL_Texture* textre, SDL_Rect sourceRect = {0,0,0,0}, SDL_Rect destinationRect = { 0,0,0,0 });
+
 	// renders everything that is currently buffered
 	void renderPresent();
 
 
+
+
+
+	/// UTIL
+
+	/**
+	 * @brief Converts an SDL_Surface* object to an SDL_Texture* in the renderer's native format
+	 * @param srface - a pointer to an SDL_Surface structure
+	 * @return The created texture, or NULL on error.
+	 */
+	SDL_Texture* convertSurfaceToTexture(SDL_Surface* srface);
+
+
+
+
+
+
+
+
+
+	/// BASE FUNCTIONS
 	// destroys the rendering context and frees memory
 	void destroyRenderer();
 protected:

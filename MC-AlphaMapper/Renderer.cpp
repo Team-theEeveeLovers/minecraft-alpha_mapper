@@ -60,6 +60,34 @@ void RENDERER::renderClear()
 	}
 }
 
+void RENDERER::renderTexture(SDL_Texture* textre, SDL_Rect* sourceRect, SDL_Rect* destinationRect)
+{
+	if (!checkRenderer()) {
+		throw std::invalid_argument("Uninitalized renderer provided!");
+	}
+	else {
+		SDL_RenderCopy(SDLR, textre, sourceRect, destinationRect);
+	}
+}
+
+void RENDERER::renderTexture(SDL_Texture* textre, SDL_Rect sourceRect, SDL_Rect destinationRect)
+{
+	if (!checkRenderer()) {
+		throw std::invalid_argument("Uninitalized renderer provided!");
+	}
+	else {
+		SDL_Rect* sourceRect_PTR = NULL;
+		if (!(sourceRect.x == 0 && sourceRect.y == 0 && sourceRect.w == 0 && sourceRect.h == 0)) {
+			sourceRect_PTR = &sourceRect;
+		}
+		SDL_Rect* destinationRect_PTR = NULL;
+		if (!(destinationRect.x == 0 && destinationRect.y == 0 && destinationRect.w == 0 && destinationRect.h == 0)) {
+			destinationRect_PTR = &destinationRect;
+		}
+		SDL_RenderCopy(SDLR, textre, sourceRect_PTR, destinationRect_PTR);
+	}
+}
+
 void RENDERER::renderPresent()
 {
 	if (!checkRenderer()) {
@@ -68,6 +96,32 @@ void RENDERER::renderPresent()
 	else {
 		SDL_RenderPresent(SDLR);
 	}
+}
+
+SDL_Texture* RENDERER::convertSurfaceToTexture(SDL_Surface* srface)
+{
+
+	SDL_Texture* outTex = NULL;
+
+	if (!checkRenderer()) {
+		throw std::invalid_argument("Uninitalized renderer provided!");
+		return outTex;
+	}
+
+	if (srface == nullptr) {
+		throw std::invalid_argument("Invalid surface provided!");
+		return outTex;
+	}
+
+	outTex = SDL_CreateTextureFromSurface(SDLR, srface);
+
+	if (outTex == nullptr) {
+		SDL_LogError(0, "Failed to create a texture from a surface! SDL_Error: %s\n", SDL_GetError());
+		return outTex; // TODO: REDUNDANT???
+	}
+
+
+	return outTex;
 }
 
 void RENDERER::destroyRenderer()

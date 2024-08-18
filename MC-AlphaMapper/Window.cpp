@@ -20,6 +20,7 @@ bool WINDOW::createWindow(const char* title, int width, int height, Uint32 flags
 		return false;
 	}
 	else {
+		SDL_SetWindowMinimumSize(SDLW, width, height);
 		return true;
 	}
 }

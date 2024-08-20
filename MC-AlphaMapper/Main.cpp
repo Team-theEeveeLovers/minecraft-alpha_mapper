@@ -158,8 +158,8 @@ void showAboutMenu(bool* open = (bool*)0) {
 }
 
 
-void renderBlockAsRect(BYTE blockID, int x, int y = 0) {
-	SDL_Rect drawingRect = { 4+(16 * x), 4+(16 * y), 16, 16 };
+void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
+	SDL_Rect drawingRect = { 4+(16 * y), 4+(16 * x), 16, 16 };
 	switch (blockID) {
 	case AIR:
 		main_renderer.setDrawColor(0xB1, 0xEB, 0xF1, 0x99);
@@ -187,13 +187,13 @@ void renderBlockAsRect(BYTE blockID, int x, int y = 0) {
 	if (screenWidth % 16 != 0) 
 		screenWidth -= (screenWidth % 16);
 
-	if (drawingRect.x > 2048) {
-		int tempX = drawingRect.x;
+	if (drawingRect.y > 2048) {
+		int tempX = drawingRect.y;
 		while (tempX > 2048) {
-			drawingRect.y += 16;
+			drawingRect.x += 16;
 			tempX -= 2048;
 		}
-		drawingRect.x = tempX;
+		drawingRect.y = tempX;
 	}
 
 	// blocks with "texture"

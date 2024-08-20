@@ -197,7 +197,8 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
 	}
 
 	// blocks with "texture"
-	if (blockID == TORCH) {
+	switch (blockID) {
+	case TORCH:
 		drawingRect.h = 4;
 		drawingRect.w = 6;
 
@@ -210,8 +211,9 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
 		drawingRect.y += 4;
 		main_renderer.setDrawColor(0x57, 0x3C, 0x08);
 		main_renderer.fillRect(&drawingRect);
-	}
-	else if (blockID == GRASS) {
+
+		break;
+	case GRASS:
 		// top layer
 		drawingRect.h = 4;
 		main_renderer.setDrawColor(0x00, 0xFF, 0x77);
@@ -222,10 +224,8 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
 		drawingRect.y += 4;
 		main_renderer.setDrawColor(0x5E, 0x3E, 0x07);
 		main_renderer.fillRect(&drawingRect);
-
-	}
-	else if (blockID == GRAVEL) {
-
+		break;
+	case GRAVEL:
 		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
 		main_renderer.fillRect(&drawingRect);
 
@@ -237,9 +237,8 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
 		main_renderer.setDrawColor(0x5E, 0x5E, 0x5E, 0x85);
 		main_renderer.fillRect({ drawingRect.x + 3, drawingRect.y + 9, 4, 4 });
 
-	}
-	else if (blockID == IRON_ORE) {
-
+		break;
+	case IRON_ORE:
 		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
 		main_renderer.fillRect(&drawingRect);
 
@@ -247,9 +246,9 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
 		main_renderer.setDrawColor(0xCC, 0x90, 0x7C, 0xCC);
 		main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
 		main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
-	}
-	else if (blockID == COAL_ORE) {
 
+		break;
+	case COAL_ORE:
 		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
 		main_renderer.fillRect(&drawingRect);
 
@@ -257,9 +256,10 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
 		main_renderer.setDrawColor(0x22, 0x22, 0x22, 0xCC);
 		main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
 		main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
-	}
-	else if (blockID == REDSTONE_ORE) {
+		
+		break;
 
+	case REDSTONE_ORE:
 		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
 		main_renderer.fillRect(&drawingRect);
 
@@ -267,10 +267,12 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
 		main_renderer.setDrawColor(0xFF, 0x22, 0x22, 0xCC);
 		main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
 		main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
-	}
-	else {
+
+		break;
+	default:		
 		if (blockID == SNOW_LAYER) { drawingRect.h = 8; drawingRect.y += 8; }
 		main_renderer.fillRect(&drawingRect);
+		break;
 	}
 }
 

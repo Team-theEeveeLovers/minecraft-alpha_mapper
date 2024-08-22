@@ -18,6 +18,11 @@ LEVEL_DATA currentLVLFile;
 Time LevelLastPlay;
 
 CHUNK_DATA spawn;
+CHUNK_DATA one_zero;
+CHUNK_DATA two_zero;
+CHUNK_DATA three_zero;
+CHUNK_DATA four_zero;
+
 
 vector2_int scroll;
 
@@ -177,7 +182,7 @@ void showDebugMenu(bool* open = (bool*)0) {
 }
 
 
-void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
+void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 	SDL_Rect drawingRect = { 4+(16 * y), 4+(16 * x), 16, 16 };
 	switch (blockID) {
 	case AIR:
@@ -217,6 +222,8 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
 		}
 		drawingRect.y = tempX;
 	}
+
+	drawingRect.x += x_offset;
 
 	// blocks with "texture"
 	switch (blockID) {
@@ -367,6 +374,11 @@ int main(int argc, char* argv[]) {
 						if (ControlPressed && currentLVLFile.initalized) {
 							currentLVLFile.closeFile();
 							currentFolder.clear();
+							spawn.closeFile();
+							one_zero.closeFile();
+							two_zero.closeFile();
+							three_zero.closeFile();
+							four_zero.closeFile();
 						}
 						break;
 					}
@@ -431,7 +443,14 @@ int main(int argc, char* argv[]) {
 
 							if (ImGui::MenuItem("Save As...", "(Coming Soon!)", false, false)) {}
 
-							if (ImGui::MenuItem("Close File", "Ctrl+W", nullptr, currentLVLFile.initalized)) { currentLVLFile.closeFile(); currentFolder.clear(); }
+							if (ImGui::MenuItem("Close File", "Ctrl+W", nullptr, currentLVLFile.initalized)) { 
+								currentLVLFile.closeFile(); currentFolder.clear(); 
+								spawn.closeFile();
+								one_zero.closeFile();
+								two_zero.closeFile();
+								three_zero.closeFile();
+								four_zero.closeFile();
+							}
 
 							if (ImGui::MenuItem("Exit", "Alt+F4")) { quit = true; }
 
@@ -475,6 +494,31 @@ int main(int argc, char* argv[]) {
 						Byte curBlock = spawn.Blocks[i];
 						renderBlockAsRect(curBlock, (1535-i) + scroll.y);
 					}
+					if (one_zero.init) {
+						for (int i = 0; i < 1536; i++) {
+							Byte curBlock = one_zero.Blocks[i];
+							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 192);
+						}
+					}
+					if (two_zero.init) {
+						for (int i = 0; i < 1536; i++) {
+							Byte curBlock = two_zero.Blocks[i];
+							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 384);
+						}
+					}
+					if (three_zero.init) {
+						for (int i = 0; i < 1536; i++) {
+							Byte curBlock = three_zero.Blocks[i];
+							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 576);
+						}
+					}
+					if (four_zero.init) {
+						for (int i = 0; i < 1536; i++) {
+							Byte curBlock = four_zero.Blocks[i];
+							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 768);
+						}
+					}
+
 				}
 				
 				if (demoWindowOpen)
@@ -537,13 +581,50 @@ int main(int argc, char* argv[]) {
 
 						main_renderer.setDrawColor(draw, draw, draw);
 						main_renderer.renderClear();
+						main_gui.newFrame();
 
+						const ImGuiViewport* viewport = ImGui::GetMainViewport();
+						ImGui::SetNextWindowPos(viewport->WorkPos);
+						ImGui::SetNextWindowSize(viewport->WorkSize);
+						ImGui::Begin("Loading...", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+						ImGui::Text("Loading Chunks...");
+						ImGui::Text("Please wait...");
+						ImGui::End();
+
+						main_gui.renderPresent();
 						main_renderer.renderPresent();
 
 						LevelLastPlay.unixTime = currentLVLFile.getLastPlayTime().value;
 
-						std::string spawnChunkPath = containingDirectory.append("\\0\\0\\c.0.0.dat");
-						spawn.loadFile(spawnChunkPath);
+						std::string ChunkPath = containingDirectory;
+						ChunkPath.append("\\0\\0\\c.0.0.dat");
+						if (spawn.loadFile(ChunkPath)) {
+							SDL_Log("Loaded spawn chunk (0,0) sucessfully.\n");
+						}
+
+						ChunkPath = containingDirectory;
+						ChunkPath.append("\\1\\0\\c.1.0.dat");
+						if (one_zero.loadFile(ChunkPath)) {
+							SDL_Log("Loaded chunk 1,0 sucessfully.\n");
+						}
+
+						ChunkPath = containingDirectory;
+						ChunkPath.append("\\2\\0\\c.2.0.dat");
+						if (two_zero.loadFile(ChunkPath)) {
+							SDL_Log("Loaded chunk 2,0 sucessfully.\n");
+						}
+
+						ChunkPath = containingDirectory;
+						ChunkPath.append("\\3\\0\\c.3.0.dat");
+						if (three_zero.loadFile(ChunkPath)) {
+							SDL_Log("Loaded chunk 3,0 sucessfully.\n");
+						}
+
+						ChunkPath = containingDirectory;
+						ChunkPath.append("\\4\\0\\c.4.0.dat");
+						if (four_zero.loadFile(ChunkPath)) {
+							SDL_Log("Loaded chunk 4,0 sucessfully.\n");
+						}
 					}
 				}
 

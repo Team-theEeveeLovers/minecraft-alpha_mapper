@@ -4,6 +4,7 @@
 #include "Gui.hpp"
 #include "FileLoading.hpp"
 #include "Types/Time.h"
+#include "Types/VectorTypes.h"
 
 const char* MC_MAPPER_VERSION = "Alpha 0.0.1";
 
@@ -17,6 +18,8 @@ LEVEL_DATA currentLVLFile;
 Time LevelLastPlay;
 
 CHUNK_DATA spawn;
+
+vector2_int scroll;
 
 bool initMain() {
 	bool success = true;
@@ -157,6 +160,22 @@ void showAboutMenu(bool* open = (bool*)0) {
 	ImGui::End();
 }
 
+/**
+ * @brief Shows this program's debug menu
+ * @param open - A pointer to a bool which will be set to false when the window is closed. If set to NULL (or not set at all), the window's close button will not show.
+ */
+void showDebugMenu(bool* open = (bool*)0) {
+	if (!ImGui::Begin("MC Alpha Mapper Debugger", open, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::End();
+		return;
+	}
+
+	ImGui::Text("Scroll Y: %d", scroll.y);
+
+
+	ImGui::End();
+}
+
 
 void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
 	SDL_Rect drawingRect = { 4+(16 * y), 4+(16 * x), 16, 16 };
@@ -178,6 +197,9 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
 		break;
 	case SNOW_LAYER:
 		main_renderer.setDrawColor(0xEE, 0xEE, 0xFF);
+		break;
+	case SAND:
+		main_renderer.setDrawColor(0xDE, 0xD4, 0xA4);
 		break;
 	default:
 		main_renderer.setDrawColor(0xFF, 0xAA, 0xFF);
@@ -306,6 +328,8 @@ int main(int argc, char* argv[]) {
 		bool abutWindowOpen = false;
 		// Is the About MC Alpha Mapper window open?
 		bool abutMCWindowOpen = false;
+		// Is the MC Alpha Mapper Debugger window open?
+		bool debgMCWindowOpen = false;
 
 		// is the value in draw incrementing or decrementing?
 		bool drawIncrementing = false;
@@ -314,6 +338,7 @@ int main(int argc, char* argv[]) {
 		// file menu
 		ImGui::FileBrowser fileDialog;
 		std::string selectedfilepath;
+		std::string currentFolder;
 
 		fileDialog.SetTitle("Open level.dat");
 		fileDialog.SetTypeFilters(
@@ -326,6 +351,7 @@ int main(int argc, char* argv[]) {
 			// temporary event handler until we move event handling to a separate header
 			while (SDL_PollEvent(&e)) { 
 				main_gui.processEvents(&e);
+				
 				if (e.type == SDL_QUIT) quit = true; 
 
 				if (e.type == SDL_KEYDOWN) {
@@ -338,9 +364,29 @@ int main(int argc, char* argv[]) {
 							fileDialog.Open();
 						break;
 					case SDLK_w:
-						if (ControlPressed && currentLVLFile.initalized)
+						if (ControlPressed && currentLVLFile.initalized) {
 							currentLVLFile.closeFile();
+							currentFolder.clear();
+						}
 						break;
+					}
+				}
+
+				if (e.type == SDL_MOUSEMOTION && currentLVLFile.initalized) {
+					// Is the left mouse button held?
+					if (e.motion.state & SDL_BUTTON_LEFT) {
+						ImGuiIO IM_IO = ImGui::GetIO();
+
+						// if the mouse isn't inside UI
+						if (!IM_IO.WantCaptureMouse) {
+							scroll.y += e.motion.yrel;
+							if (scroll.y > 30) {
+								scroll.y = -97;
+							}
+							else if (scroll.y < -128) {
+								scroll.y = -3;
+							}
+						}
 					}
 				}
 			}
@@ -385,7 +431,7 @@ int main(int argc, char* argv[]) {
 
 							if (ImGui::MenuItem("Save As...", "(Coming Soon!)", false, false)) {}
 
-							if (ImGui::MenuItem("Close File", "Ctrl+W", nullptr, currentLVLFile.initalized)) { currentLVLFile.closeFile(); }
+							if (ImGui::MenuItem("Close File", "Ctrl+W", nullptr, currentLVLFile.initalized)) { currentLVLFile.closeFile(); currentFolder.clear(); }
 
 							if (ImGui::MenuItem("Exit", "Alt+F4")) { quit = true; }
 
@@ -395,6 +441,7 @@ int main(int argc, char* argv[]) {
 						if (ImGui::BeginMenu("Tools")) {
 							if (ImGui::MenuItem("ImGui Demo Window", NULL, demoWindowOpen)) { demoWindowOpen = !demoWindowOpen; }
 							if (ImGui::MenuItem("ImGui Metrics/Debugger", NULL, metrWindowOpen)) { metrWindowOpen = !metrWindowOpen; }
+							if (ImGui::MenuItem("MC Alpha Mapper Debugger", NULL, debgMCWindowOpen)) { debgMCWindowOpen = !debgMCWindowOpen; }
 							if (ImGui::MenuItem("Settings", "(Coming Soon!)", false, false)) {}
 							ImGui::EndMenu();
 						}
@@ -415,7 +462,7 @@ int main(int argc, char* argv[]) {
 					if (currentLVLFile.initalized) {
 						ImGui::NewLine();
 						ImGui::NewLine();
-						ImGui::Text("Open File:");
+						ImGui::Text("Open File: %s", currentFolder.c_str());
 						ImGui::NewLine();
 						ImGui::Text("Last Play Time: %d/%d/%d", LevelLastPlay.toMonth(), LevelLastPlay.toDay(), LevelLastPlay.toYear());
 						ImGui::SameLine(); ImGui::Text("at %d:%d:%d UTC", LevelLastPlay.toHour(), LevelLastPlay.toMinute(), LevelLastPlay.toSecond());
@@ -426,7 +473,7 @@ int main(int argc, char* argv[]) {
 				if (currentLVLFile.initalized) {
 					for (int i = 0; i < 1536; i++) {
 						Byte curBlock = spawn.Blocks[i];
-						renderBlockAsRect(curBlock, i);
+						renderBlockAsRect(curBlock, (1535-i) + scroll.y);
 					}
 				}
 				
@@ -438,6 +485,8 @@ int main(int argc, char* argv[]) {
 					ImGui::ShowAboutWindow(&abutWindowOpen);
 				if (abutMCWindowOpen)
 					showAboutMenu(&abutMCWindowOpen);
+				if (debgMCWindowOpen)
+					showDebugMenu(&debgMCWindowOpen);
 
 				fileDialog.Display();
 
@@ -451,6 +500,7 @@ int main(int argc, char* argv[]) {
 
 					selectedfilepath = fileDialog.GetSelected().string();
 					std::string containingDirectory = fileDialog.GetSelected().parent_path().string();
+					currentFolder = fileDialog.GetSelected().parent_path().filename().string();
 					fileDialog.ClearSelected();
 
 					const ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -467,7 +517,8 @@ int main(int argc, char* argv[]) {
 						SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "An error occured!", ("Couldn't open file " + selectedfilepath + "\nPlease check log for issue!").c_str(), main_window);
 					}
 					else {
-
+						// RESET SCROLL VALUE
+						scroll = vector2_int();
 						// POST LOAD: Draw new frame
 
 						if (draw != 0x00 && !drawIncrementing) {

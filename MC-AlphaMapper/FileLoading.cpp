@@ -380,8 +380,9 @@ bool CHUNK_DATA::loadFile(std::string path)
 
 void CHUNK_DATA::closeFile()
 {
-	init = false;
-
-	if (out_RWops != NULL && out_RWops->close != NULL)
+	
+	if (out_RWops != NULL && out_RWops->close != NULL && out_RWops->read != NULL && init)
 		SDL_RWclose(out_RWops);
+
+	init = false;
 }

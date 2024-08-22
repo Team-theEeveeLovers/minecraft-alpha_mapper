@@ -25,6 +25,7 @@ enum Block : BYTE {
 	GRASS = 0x02,
 	DIRT = 0x03,
 	BEDROCK = 0x07,
+	SAND = 0x0C,
 	GRAVEL = 0x0D,
 	GOLD_ORE = 0x0E,
 	IRON_ORE = 0x0F,

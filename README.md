@@ -5,4 +5,4 @@ This is a ***VERY*** incomplete program for mapping Minecraft worlds saved in ve
 
 ## Current progress:
 * Level Info Loading and Displaying:  ``VERY INCOMPLETE``
-* Chunk Loading and Displaying:  ``NOT STARTED``
+* Chunk Loading and Displaying:  ``SOMEWHAT INCOMPLETE``

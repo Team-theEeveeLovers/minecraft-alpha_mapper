@@ -3,7 +3,7 @@
 add_executable(
 	MC_Alpha_Mapper 
 "globals.h" "Main.cpp" "Main.h" "Window.cpp" "Window.hpp" "Renderer.cpp" "Renderer.hpp" "Gui.cpp" "Gui.hpp" "FileLoading.cpp" "FileLoading.hpp" 
-"Types/NBT.h" "Types/Time.h" 
+"Types/NBT.h" "Types/Time.h" "Types/VectorTypes.h" 
 "Utils/Base36.cpp" "Utils/Base36.hpp" 
 "_external/imgui/imgui.cpp" "_external/imgui/imgui_demo.cpp" "_external/imgui/imgui_draw.cpp" "_external/imgui/imgui_tables.cpp" "_external/imgui/imgui_widgets.cpp" 
 "_external/imgui/backends/imgui_impl_sdl2.cpp" "_external/imgui/backends/imgui_impl_sdlrenderer2.cpp" 

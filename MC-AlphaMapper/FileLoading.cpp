@@ -321,6 +321,9 @@ bool LEVEL_DATA::readFile()
 
 bool CHUNK_DATA::loadFile(std::string path)
 {
+	// close file to prevent any read access related errors
+	closeFile();
+
 	init = false;
 	RWops = SDL_RWFromFile(path.c_str(), "r+b");
 	if (RWops == NULL) {

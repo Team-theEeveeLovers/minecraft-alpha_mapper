@@ -238,6 +238,14 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int y = 0) {
 		main_renderer.fillRect({ drawingRect.x + 3, drawingRect.y + 9, 4, 4 });
 
 		break;
+	case BEDROCK:
+		main_renderer.fillRect(&drawingRect);
+
+		main_renderer.setDrawColor(0x5E, 0x5E, 0x5E, 0x5E);
+		main_renderer.fillRect({ drawingRect.x + 2, drawingRect.y + 2, 4, 4 });
+
+		main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
+		break;
 	case IRON_ORE:
 		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
 		main_renderer.fillRect(&drawingRect);

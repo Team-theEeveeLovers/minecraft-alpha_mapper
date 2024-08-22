@@ -321,6 +321,7 @@ bool LEVEL_DATA::readFile()
 
 bool CHUNK_DATA::loadFile(std::string path)
 {
+	init = false;
 	RWops = SDL_RWFromFile(path.c_str(), "r+b");
 	if (RWops == NULL) {
 		SDL_LogError(0, "SDL could not open the file '%s'! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -369,5 +370,15 @@ bool CHUNK_DATA::loadFile(std::string path)
 	SDL_RWseek(out_RWops, blocksStart + 6 + 4, RW_SEEK_SET);
 	SDL_RWread(out_RWops, &Blocks, sizeof(BYTE), 32768);
 
+	init = true;
+
 	return true;
+}
+
+void CHUNK_DATA::closeFile()
+{
+	init = false;
+
+	if (out_RWops != NULL && out_RWops->close != NULL)
+		SDL_RWclose(out_RWops);
 }

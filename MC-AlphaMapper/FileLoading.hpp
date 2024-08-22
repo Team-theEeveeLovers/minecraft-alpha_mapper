@@ -106,10 +106,16 @@ protected:
 	// the output file stream context
 	SDL_RWops* out_RWops = NULL;
 
+
 #ifdef DEBUG_HEADERS
-	char signature[8] = { '\0', 'C', 'H', 'U', 'N', 'K', 'S', '\0'};
+	char signature[7] = { '\0', 'C', 'H', 'U', 'N', 'K', 'S'};
 #endif
+
 public:
+
+	// is this chunk initalized?
+	bool init = false;
+
 	// The block array
 	BYTE Blocks[32768];
 
@@ -119,4 +125,9 @@ public:
 	* @return True on success, or false on failure
 	*/
 	bool loadFile(std::string path);
+
+	/**
+	 * @brief Closes the file and frees memory
+	 */
+	void closeFile();
 };

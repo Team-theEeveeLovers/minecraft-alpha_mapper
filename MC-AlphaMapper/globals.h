@@ -37,6 +37,8 @@
 // the macro by SDL to expand main to SDL_main breaks ninja
 #define main main
 
+#include <thread>
+
 #include "imgui.h"
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_sdlrenderer2.h"

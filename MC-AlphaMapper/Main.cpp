@@ -611,6 +611,9 @@ int main(int argc, char* argv[]) {
 					else {
 						// RESET SCROLL VALUE
 						scroll = vector2_int();
+
+						LevelLastPlay.unixTime = currentLVLFile.getLastPlayTime().value;
+
 						// POST LOAD: Draw new frame
 
 						if (draw != 0x00 && !drawIncrementing) {
@@ -639,10 +642,11 @@ int main(int argc, char* argv[]) {
 						ImGui::Text("Please wait...");
 						ImGui::End();
 
+
 						main_gui.renderPresent();
 						main_renderer.renderPresent();
 
-						LevelLastPlay.unixTime = currentLVLFile.getLastPlayTime().value;
+						
 
 						std::string ChunkPath = containingDirectory;
 						ChunkPath.append("\\0\\0\\c.0.0.dat");

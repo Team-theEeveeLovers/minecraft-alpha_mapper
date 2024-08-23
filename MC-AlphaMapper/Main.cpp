@@ -37,7 +37,7 @@ bool initMain() {
 	std::cout << "Software Version: " << MC_MAPPER_VERSION << std::endl << std::endl;
 	//Initialize SDL
 	std::cout << "Initalizing SDL... ";
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0)
 	{
 		std::cout << "failure" << std::endl;
 		SDL_LogError(0, "SDL could not initialize! SDL Error: %s\n", SDL_GetError());
@@ -67,6 +67,10 @@ bool initMain() {
 					if (!main_gui.initalizeForSDL2(main_window, main_renderer)) {
 						SDL_LogError(0, "ImGui SDL2 backend could not initialize!\n\n");
 						success = false;
+					}
+					else {
+						ImGuiIO& io = ImGui::GetIO();
+						io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 					}
 				}
 			}

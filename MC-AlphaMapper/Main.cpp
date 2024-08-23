@@ -22,6 +22,8 @@ CHUNK_DATA one_zero;
 CHUNK_DATA two_zero;
 CHUNK_DATA three_zero;
 CHUNK_DATA four_zero;
+CHUNK_DATA five_zero;
+CHUNK_DATA six_zero;
 
 
 vector2_int scroll;
@@ -324,6 +326,8 @@ void closeChunks() {
 	two_zero.closeFile();
 	three_zero.closeFile();
 	four_zero.closeFile();
+	five_zero.closeFile();
+	six_zero.closeFile();
 }
 
 // we gotta define up here because std::threads can't be called with class member functions (but it can be called within)
@@ -333,7 +337,7 @@ auto loadChunks(std::string BASEpath) {
 
 #ifdef DEBUG_MULTITHREADING
 	// Debug Delay
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 #endif
 	ChunkPath = BASEpath_TEMP;
 	ChunkPath.append("\\1\\0\\c.1.0.dat");
@@ -343,7 +347,7 @@ auto loadChunks(std::string BASEpath) {
 
 #ifdef DEBUG_MULTITHREADING
 	// Debug Delay
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 #endif
 	ChunkPath = BASEpath_TEMP;
 	ChunkPath.append("\\2\\0\\c.2.0.dat");
@@ -353,7 +357,7 @@ auto loadChunks(std::string BASEpath) {
 
 #ifdef DEBUG_MULTITHREADING
 	// Debug Delay
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 #endif
 	ChunkPath = BASEpath_TEMP;
 	ChunkPath.append("\\3\\0\\c.3.0.dat");
@@ -363,12 +367,32 @@ auto loadChunks(std::string BASEpath) {
 
 #ifdef DEBUG_MULTITHREADING
 	// Debug Delay
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 #endif
 	ChunkPath = BASEpath_TEMP;
 	ChunkPath.append("\\4\\0\\c.4.0.dat");
 	if (four_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 4,0 sucessfully.\n");
+	}
+
+#ifdef DEBUG_MULTITHREADING
+	// Debug Delay
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+#endif
+	ChunkPath = BASEpath_TEMP;
+	ChunkPath.append("\\5\\0\\c.5.0.dat");
+	if (five_zero.loadFile(ChunkPath)) {
+		SDL_Log("Loaded chunk 5,0 sucessfully.\n");
+	}
+
+#ifdef DEBUG_MULTITHREADING
+	// Debug Delay
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+#endif
+	ChunkPath = BASEpath_TEMP;
+	ChunkPath.append("\\6\\0\\c.6.0.dat");
+	if (six_zero.loadFile(ChunkPath)) {
+		SDL_Log("Loaded chunk 6,0 sucessfully.\n");
 	}
 }
 
@@ -567,6 +591,18 @@ int main(int argc, char* argv[]) {
 						for (int i = 0; i < 1536; i++) {
 							Byte curBlock = four_zero.Blocks[i];
 							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 768);
+						}
+					}
+					if (five_zero.init) {
+						for (int i = 0; i < 1536; i++) {
+							Byte curBlock = five_zero.Blocks[i];
+							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 960);
+						}
+					}
+					if (six_zero.init) {
+						for (int i = 0; i < 1536; i++) {
+							Byte curBlock = six_zero.Blocks[i];
+							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 1152);
 						}
 					}
 

@@ -315,6 +315,17 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 	}
 }
 
+/**
+ * @brief Function to close all chunks so I don't have to write it twice when I add more chunks to load
+ */
+void closeChunks() {
+	spawn.closeFile();
+	one_zero.closeFile();
+	two_zero.closeFile();
+	three_zero.closeFile();
+	four_zero.closeFile();
+}
+
 // we gotta define up here because std::threads can't be called with class member functions (but it can be called within)
 auto loadChunks(std::string BASEpath) {
 	std::string BASEpath_TEMP = BASEpath;
@@ -422,11 +433,7 @@ int main(int argc, char* argv[]) {
 						if (ControlPressed && currentLVLFile.initalized) {
 							currentLVLFile.closeFile();
 							currentFolder.clear();
-							spawn.closeFile();
-							one_zero.closeFile();
-							two_zero.closeFile();
-							three_zero.closeFile();
-							four_zero.closeFile();
+							closeChunks();
 						}
 						break;
 					}
@@ -493,11 +500,7 @@ int main(int argc, char* argv[]) {
 
 							if (ImGui::MenuItem("Close File", "Ctrl+W", nullptr, currentLVLFile.initalized)) { 
 								currentLVLFile.closeFile(); currentFolder.clear(); 
-								spawn.closeFile();
-								one_zero.closeFile();
-								two_zero.closeFile();
-								three_zero.closeFile();
-								four_zero.closeFile();
+								closeChunks();
 							}
 
 							if (ImGui::MenuItem("Exit", "Alt+F4")) { quit = true; }

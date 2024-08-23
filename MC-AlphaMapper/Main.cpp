@@ -26,6 +26,8 @@ CHUNK_DATA four_zero;
 
 vector2_int scroll;
 
+#define DEBUG_MULTITHREADING
+
 bool initMain() {
 	bool success = true;
 
@@ -310,6 +312,52 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 		if (blockID == SNOW_LAYER) { drawingRect.h = 8; drawingRect.y += 8; }
 		main_renderer.fillRect(&drawingRect);
 		break;
+	}
+}
+
+// we gotta define up here because std::threads can't be called with class member functions (but it can be called within)
+auto loadChunks(std::string BASEpath) {
+	std::string BASEpath_TEMP = BASEpath;
+	std::string ChunkPath = BASEpath_TEMP;
+
+#ifdef DEBUG_MULTITHREADING
+	// Debug Delay
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+#endif
+	ChunkPath = BASEpath_TEMP;
+	ChunkPath.append("\\1\\0\\c.1.0.dat");
+	if (one_zero.loadFile(ChunkPath)) {
+		SDL_Log("Loaded chunk 1,0 sucessfully.\n");
+	}
+
+#ifdef DEBUG_MULTITHREADING
+	// Debug Delay
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+#endif
+	ChunkPath = BASEpath_TEMP;
+	ChunkPath.append("\\2\\0\\c.2.0.dat");
+	if (two_zero.loadFile(ChunkPath)) {
+		SDL_Log("Loaded chunk 2,0 sucessfully.\n");
+	}
+
+#ifdef DEBUG_MULTITHREADING
+	// Debug Delay
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+#endif
+	ChunkPath = BASEpath_TEMP;
+	ChunkPath.append("\\3\\0\\c.3.0.dat");
+	if (three_zero.loadFile(ChunkPath)) {
+		SDL_Log("Loaded chunk 3,0 sucessfully.\n");
+	}
+
+#ifdef DEBUG_MULTITHREADING
+	// Debug Delay
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+#endif
+	ChunkPath = BASEpath_TEMP;
+	ChunkPath.append("\\4\\0\\c.4.0.dat");
+	if (four_zero.loadFile(ChunkPath)) {
+		SDL_Log("Loaded chunk 4,0 sucessfully.\n");
 	}
 }
 
@@ -602,6 +650,13 @@ int main(int argc, char* argv[]) {
 							SDL_Log("Loaded spawn chunk (0,0) sucessfully.\n");
 						}
 
+						std::thread chunkThread(loadChunks, containingDirectory);
+
+						// detach thread because the chunk class's initalization flag will help dispel unwanted behavior
+						// we don't need to wait (join) for it to complete
+						chunkThread.detach();
+
+						/***
 						ChunkPath = containingDirectory;
 						ChunkPath.append("\\1\\0\\c.1.0.dat");
 						if (one_zero.loadFile(ChunkPath)) {
@@ -625,6 +680,7 @@ int main(int argc, char* argv[]) {
 						if (four_zero.loadFile(ChunkPath)) {
 							SDL_Log("Loaded chunk 4,0 sucessfully.\n");
 						}
+						*/
 					}
 				}
 

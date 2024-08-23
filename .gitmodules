@@ -5,12 +5,12 @@
 [submodule "MC-AlphaMapper/_external/imgui"]
 	path = MC-AlphaMapper/_external/imgui
 	url = https://github.com/ocornut/imgui/
-[submodule "MC-AlphaMapper/_external/imgui-filebrowser"]
-	path = MC-AlphaMapper/_external/imgui-filebrowser
-	url = https://github.com/AirGuanZ/imgui-filebrowser
 [submodule "MC-AlphaMapper/_external/gzip-hpp"]
 	path = MC-AlphaMapper/_external/gzip-hpp
 	url = https://github.com/mapbox/gzip-hpp
 [submodule "zlib"]
 	path = _dependlibs/zlib
 	url = https://github.com/TheEeveeLovers/zlib
+[submodule "MC-AlphaMapper/_external/imgui-filebrowser"]
+	path = MC-AlphaMapper/_external/imgui-filebrowser
+	url = https://github.com/TheEeveeLovers/imgui-filebrowser

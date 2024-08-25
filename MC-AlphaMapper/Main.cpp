@@ -196,6 +196,12 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 	case AIR:
 		main_renderer.setDrawColor(0xB1, 0xEB, 0xF1, 0x99);
 		break;
+	case LAVA_FLOWING: case LAVA_STILL:
+		main_renderer.setDrawColor(0xFC, 0x77, 0x03);
+		break;
+	case WATER_FLOWING: case WATER_STILL:
+		main_renderer.setDrawColor(0x03, 0x77, 0xFC);
+		break;
 	case STONE:
 		main_renderer.setDrawColor(0x55, 0x55, 0x55);
 		break;

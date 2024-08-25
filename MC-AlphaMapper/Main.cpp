@@ -569,47 +569,47 @@ int main(int argc, char* argv[]) {
 				ImGui::End();
 
 				if (currentLVLFile.initalized) {
-					for (int i = 0; i < 1536; i++) {
+					for (int i = 0; i < 2048; i++) {
 						Byte curBlock = spawn.Blocks[i];
-						renderBlockAsRect(curBlock, (1535-i) + scroll.y);
+						renderBlockAsRect(curBlock, (2047-i) + scroll.y);
 					}
 					if (one_zero.init) {
-						for (int i = 0; i < 1536; i++) {
+						for (int i = 0; i < 2048; i++) {
 							Byte curBlock = one_zero.Blocks[i];
-							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 192);
+							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 256);
 						}
 					}
 					if (two_zero.init) {
-						for (int i = 0; i < 1536; i++) {
+						for (int i = 0; i < 2048; i++) {
 							Byte curBlock = two_zero.Blocks[i];
-							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 384);
+							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 512);
 						}
 					}
 					if (three_zero.init) {
-						for (int i = 0; i < 1536; i++) {
+						for (int i = 0; i < 2048; i++) {
 							Byte curBlock = three_zero.Blocks[i];
-							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 576);
+							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 768);
 						}
 					}
 					if (four_zero.init) {
-						for (int i = 0; i < 1536; i++) {
+						for (int i = 0; i < 2048; i++) {
 							Byte curBlock = four_zero.Blocks[i];
-							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 768);
+							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 1024);
 						}
 					}
 					if (five_zero.init) {
-						for (int i = 0; i < 1536; i++) {
+						for (int i = 0; i < 2048; i++) {
 							Byte curBlock = five_zero.Blocks[i];
-							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 960);
+							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 1280);
 						}
 					}
 					if (six_zero.init) {
-						for (int i = 0; i < 1536; i++) {
+						for (int i = 0; i < 2048; i++) {
 							Byte curBlock = six_zero.Blocks[i];
-							renderBlockAsRect(curBlock, (1535 - i) + scroll.y, 1152);
+							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 1536);
 						}
 					}
-
+					 
 				}
 				
 				if (demoWindowOpen)

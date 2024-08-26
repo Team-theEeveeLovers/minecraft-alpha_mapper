@@ -578,40 +578,28 @@ int main(int argc, char* argv[]) {
 					for (int i = 0; i < 2048; i++) {
 						Byte curBlock = spawn.Blocks[i];
 						renderBlockAsRect(curBlock, (2047-i) + scroll.y);
-					}
-					if (one_zero.init) {
-						for (int i = 0; i < 2048; i++) {
-							Byte curBlock = one_zero.Blocks[i];
+						if (one_zero.init) {
+							curBlock = one_zero.Blocks[i];
 							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 256);
 						}
-					}
-					if (two_zero.init) {
-						for (int i = 0; i < 2048; i++) {
-							Byte curBlock = two_zero.Blocks[i];
-							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 512);
+						if (two_zero.init) {
+							curBlock = two_zero.Blocks[i];
+							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 512);							
 						}
-					}
-					if (three_zero.init) {
-						for (int i = 0; i < 2048; i++) {
-							Byte curBlock = three_zero.Blocks[i];
+						if (three_zero.init) {
+							curBlock = three_zero.Blocks[i];
 							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 768);
 						}
-					}
-					if (four_zero.init) {
-						for (int i = 0; i < 2048; i++) {
-							Byte curBlock = four_zero.Blocks[i];
+						if (four_zero.init) {
+							curBlock = four_zero.Blocks[i];
 							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 1024);
 						}
-					}
-					if (five_zero.init) {
-						for (int i = 0; i < 2048; i++) {
-							Byte curBlock = five_zero.Blocks[i];
+						if (five_zero.init) {
+							curBlock = five_zero.Blocks[i];
 							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 1280);
 						}
-					}
-					if (six_zero.init) {
-						for (int i = 0; i < 2048; i++) {
-							Byte curBlock = six_zero.Blocks[i];
+						if (six_zero.init) {
+							curBlock = six_zero.Blocks[i];
 							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 1536);
 						}
 					}

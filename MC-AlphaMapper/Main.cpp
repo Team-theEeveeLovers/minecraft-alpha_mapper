@@ -27,6 +27,8 @@ CHUNK_DATA six_zero;
 
 // are we currently loading chunks?
 bool loading_Chunks = false;
+// the chunk currently being loaded
+int loading_Chunk = 0;
 
 vector2_int scroll;
 
@@ -350,6 +352,7 @@ auto loadChunks(std::string BASEpath) {
 	std::string BASEpath_TEMP = BASEpath;
 	std::string ChunkPath = BASEpath_TEMP;
 
+	loading_Chunk = 1;
 #ifdef DEBUG_MULTITHREADING
 	// Debug Delay
 	std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -360,6 +363,7 @@ auto loadChunks(std::string BASEpath) {
 		SDL_Log("Loaded chunk 1,0 sucessfully.\n");
 	}
 
+	loading_Chunk = 2;
 #ifdef DEBUG_MULTITHREADING
 	// Debug Delay
 	std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -370,6 +374,7 @@ auto loadChunks(std::string BASEpath) {
 		SDL_Log("Loaded chunk 2,0 sucessfully.\n");
 	}
 
+	loading_Chunk = 3;
 #ifdef DEBUG_MULTITHREADING
 	// Debug Delay
 	std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -380,6 +385,7 @@ auto loadChunks(std::string BASEpath) {
 		SDL_Log("Loaded chunk 3,0 sucessfully.\n");
 	}
 
+	loading_Chunk = 4;
 #ifdef DEBUG_MULTITHREADING
 	// Debug Delay
 	std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -390,6 +396,7 @@ auto loadChunks(std::string BASEpath) {
 		SDL_Log("Loaded chunk 4,0 sucessfully.\n");
 	}
 
+	loading_Chunk = 5;
 #ifdef DEBUG_MULTITHREADING
 	// Debug Delay
 	std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -400,6 +407,7 @@ auto loadChunks(std::string BASEpath) {
 		SDL_Log("Loaded chunk 5,0 sucessfully.\n");
 	}
 
+	loading_Chunk = 6;
 #ifdef DEBUG_MULTITHREADING
 	// Debug Delay
 	std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -412,6 +420,8 @@ auto loadChunks(std::string BASEpath) {
 
 	// we are no longer loading chunks
 	loading_Chunks = false;
+	// reset status value
+	loading_Chunk = 0;
 }
 
 int main(int argc, char* argv[]) {
@@ -569,14 +579,18 @@ int main(int argc, char* argv[]) {
 
 					if (currentLVLFile.initalized) {
 						if (loading_Chunks) {
-							ImGui::Text("Loading chunks");
+							ImGui::Text("Loading chunk %d/6", loading_Chunk);
+							// + 1 because Spawn Chunk 
+							// / 8.f because 7 total chunks and + 1 because the number keeps track of the CURRENTLY loading chunk (not the already loaded chunk)
+							ImGui::ProgressBar((static_cast<float>(loading_Chunk + 1) / 8.f));
 						}
 						else {
-							ImGui::Text("Loaded chunks");
+							ImGui::Text("Loaded chunks"); 
+							ImGui::NewLine();
 						}
 
 
-						ImGui::NewLine();
+						
 						ImGui::NewLine();
 						ImGui::Text("Open File: %s", currentFolder.c_str());
 						ImGui::NewLine();

@@ -171,12 +171,12 @@ bool LEVEL_DATA::loadFile(std::string path)
 
 void LEVEL_DATA::closeFile(void)
 {
-	if (RWops != NULL) 
+	if (RWops != NULL && RWops->read != NULL)
 		SDL_RWclose(RWops);
 
 	
 
-	if (out_RWops != NULL && out_RWops->close != NULL) 
+	if (out_RWops != NULL && out_RWops->close != NULL && out_RWops->read != NULL)
 		SDL_RWclose(out_RWops);
 
 

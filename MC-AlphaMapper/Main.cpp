@@ -185,7 +185,10 @@ void showDebugMenu(bool* open = (bool*)0) {
 
 	ImGui::Text("Scroll Y: %d", scroll.y);
 
-
+	if (ImGui::Button("Useless Button"))
+	{
+		SDL_Log("Nothing happened!\n");
+	}
 	ImGui::End();
 }
 
@@ -558,10 +561,6 @@ int main(int argc, char* argv[]) {
 						ImGui::EndMenuBar();
 					}
 					ImGui::Text("Coming Soon!");
-					if (ImGui::Button("Useless Button"))
-					{
-						SDL_Log("Nothing happened!\n");
-					}
 
 					if (currentLVLFile.initalized) {
 						ImGui::NewLine();

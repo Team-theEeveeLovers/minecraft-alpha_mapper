@@ -25,6 +25,8 @@ CHUNK_DATA four_zero;
 CHUNK_DATA five_zero;
 CHUNK_DATA six_zero;
 
+// are we currently loading chunks?
+bool loading_Chunks = false;
 
 vector2_int scroll;
 
@@ -407,6 +409,9 @@ auto loadChunks(std::string BASEpath) {
 	if (six_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 6,0 sucessfully.\n");
 	}
+
+	// we are no longer loading chunks
+	loading_Chunks = false;
 }
 
 int main(int argc, char* argv[]) {
@@ -560,15 +565,26 @@ int main(int argc, char* argv[]) {
 						}
 						ImGui::EndMenuBar();
 					}
-					ImGui::Text("Coming Soon!");
+					ImGui::Text("Current Status:"); ImGui::SameLine();
 
 					if (currentLVLFile.initalized) {
+						if (loading_Chunks) {
+							ImGui::Text("Loading chunks");
+						}
+						else {
+							ImGui::Text("Loaded chunks");
+						}
+
+
 						ImGui::NewLine();
 						ImGui::NewLine();
 						ImGui::Text("Open File: %s", currentFolder.c_str());
 						ImGui::NewLine();
 						ImGui::Text("Last Play Time: %d/%d/%d", LevelLastPlay.toMonth(), LevelLastPlay.toDay(), LevelLastPlay.toYear());
 						ImGui::SameLine(); ImGui::Text("at %d:%d:%d UTC", LevelLastPlay.toHour(), LevelLastPlay.toMinute(), LevelLastPlay.toSecond());
+					}
+					else {
+						ImGui::Text("No file open");
 					}
 				}
 				ImGui::End();
@@ -683,7 +699,7 @@ int main(int argc, char* argv[]) {
 						main_renderer.renderPresent();
 
 						
-
+						loading_Chunks = true;
 						std::string ChunkPath = containingDirectory;
 						ChunkPath.append("\\0\\0\\c.0.0.dat");
 						if (spawn.loadFile(ChunkPath)) {

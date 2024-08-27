@@ -17,13 +17,21 @@ ImGui_CONTEXT main_gui;
 LEVEL_DATA currentLVLFile;
 Time LevelLastPlay;
 
-CHUNK_DATA spawn;
+CHUNK_DATA zero_zero; // Spawn
 CHUNK_DATA one_zero;
 CHUNK_DATA two_zero;
 CHUNK_DATA three_zero;
 CHUNK_DATA four_zero;
 CHUNK_DATA five_zero;
 CHUNK_DATA six_zero;
+
+CHUNK_DATA zero_oner;
+CHUNK_DATA one_oner;
+CHUNK_DATA two_oner;
+CHUNK_DATA three_oner;
+CHUNK_DATA four_oner;
+CHUNK_DATA five_oner;
+CHUNK_DATA six_oner;
 
 // are we currently loading chunks?
 bool loading_Chunks = false;
@@ -374,13 +382,21 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
  * @brief Function to close all chunks so I don't have to write it twice when I add more chunks to load
  */
 void closeChunks() {
-	spawn.closeFile();
+	zero_zero.closeFile();
 	one_zero.closeFile();
 	two_zero.closeFile();
 	three_zero.closeFile();
 	four_zero.closeFile();
 	five_zero.closeFile();
 	six_zero.closeFile();
+
+	zero_oner.closeFile();
+	one_oner.closeFile();
+	two_oner.closeFile();
+	three_oner.closeFile();
+	four_oner.closeFile();
+	five_oner.closeFile();
+	six_oner.closeFile();
 }
 
 // we gotta define up here because std::threads can't be called with class member functions (but it can be called within)
@@ -398,6 +414,15 @@ auto loadChunks(std::string BASEpath) {
 	if (one_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 1,0 sucessfully.\n");
 	}
+#ifdef DEBUG_MULTITHREADING
+	// Debug Delay
+	std::this_thread::sleep_for(std::chrono::milliseconds(250));
+#endif
+	ChunkPath = BASEpath_TEMP;
+	ChunkPath.append("\\1\\1r\\c.1.-1.dat");
+	if (one_oner.loadFile(ChunkPath)) {
+		SDL_Log("Loaded chunk 1,-1 sucessfully.\n");
+	}
 
 	loading_Chunk = 2;
 #ifdef DEBUG_MULTITHREADING
@@ -408,6 +433,15 @@ auto loadChunks(std::string BASEpath) {
 	ChunkPath.append("\\2\\0\\c.2.0.dat");
 	if (two_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 2,0 sucessfully.\n");
+	}
+#ifdef DEBUG_MULTITHREADING
+	// Debug Delay
+	std::this_thread::sleep_for(std::chrono::milliseconds(250));
+#endif
+	ChunkPath = BASEpath_TEMP;
+	ChunkPath.append("\\2\\1r\\c.2.-1.dat");
+	if (two_oner.loadFile(ChunkPath)) {
+		SDL_Log("Loaded chunk 2,-1 sucessfully.\n");
 	}
 
 	loading_Chunk = 3;
@@ -420,6 +454,15 @@ auto loadChunks(std::string BASEpath) {
 	if (three_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 3,0 sucessfully.\n");
 	}
+#ifdef DEBUG_MULTITHREADING
+	// Debug Delay
+	std::this_thread::sleep_for(std::chrono::milliseconds(250));
+#endif
+	ChunkPath = BASEpath_TEMP;
+	ChunkPath.append("\\3\\1r\\c.3.-1.dat");
+	if (three_oner.loadFile(ChunkPath)) {
+		SDL_Log("Loaded chunk 3,-1 sucessfully.\n");
+	}
 
 	loading_Chunk = 4;
 #ifdef DEBUG_MULTITHREADING
@@ -430,6 +473,15 @@ auto loadChunks(std::string BASEpath) {
 	ChunkPath.append("\\4\\0\\c.4.0.dat");
 	if (four_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 4,0 sucessfully.\n");
+	}
+#ifdef DEBUG_MULTITHREADING
+	// Debug Delay
+	std::this_thread::sleep_for(std::chrono::milliseconds(250));
+#endif
+	ChunkPath = BASEpath_TEMP;
+	ChunkPath.append("\\4\\1r\\c.4.-1.dat");
+	if (four_oner.loadFile(ChunkPath)) {
+		SDL_Log("Loaded chunk 4,-1 sucessfully.\n");
 	}
 
 	loading_Chunk = 5;
@@ -442,6 +494,15 @@ auto loadChunks(std::string BASEpath) {
 	if (five_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 5,0 sucessfully.\n");
 	}
+#ifdef DEBUG_MULTITHREADING
+	// Debug Delay
+	std::this_thread::sleep_for(std::chrono::milliseconds(250));
+#endif
+	ChunkPath = BASEpath_TEMP;
+	ChunkPath.append("\\5\\1r\\c.5.-1.dat");
+	if (five_oner.loadFile(ChunkPath)) {
+		SDL_Log("Loaded chunk 5,-1 sucessfully.\n");
+	}
 
 	loading_Chunk = 6;
 #ifdef DEBUG_MULTITHREADING
@@ -452,6 +513,15 @@ auto loadChunks(std::string BASEpath) {
 	ChunkPath.append("\\6\\0\\c.6.0.dat");
 	if (six_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 6,0 sucessfully.\n");
+	}
+#ifdef DEBUG_MULTITHREADING
+	// Debug Delay
+	std::this_thread::sleep_for(std::chrono::milliseconds(250));
+#endif
+	ChunkPath = BASEpath_TEMP;
+	ChunkPath.append("\\6\\1r\\c.6.-1.dat");
+	if (six_oner.loadFile(ChunkPath)) {
+		SDL_Log("Loaded chunk 6,-1 sucessfully.\n");
 	}
 
 	// we are no longer loading chunks
@@ -641,29 +711,68 @@ int main(int argc, char* argv[]) {
 
 				if (currentLVLFile.initalized) {
 					for (int i = 0; i < 2048; i++) {
-						Byte curBlock = spawn.Blocks[i];
+						Byte curBlock = 0x00;
+
+						if (zero_oner.init) {
+							curBlock = zero_oner.Blocks[i];
+							if (zero_zero.Blocks[i] == AIR && curBlock != AIR)
+								renderBlockAsRect(curBlock, (2047 - i) + scroll.y);
+						}
+						curBlock = zero_zero.Blocks[i];
 						renderBlockAsRect(curBlock, (2047-i) + scroll.y);
+
+
 						if (one_zero.init) {
+							if (one_oner.init) {
+								curBlock = one_oner.Blocks[i];
+								if (one_zero.Blocks[i] == AIR && curBlock != AIR)
+									renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 256);
+							}
 							curBlock = one_zero.Blocks[i];
 							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 256);
 						}
 						if (two_zero.init) {
+							if (two_oner.init) {
+								curBlock = two_oner.Blocks[i];
+								if (two_zero.Blocks[i] == AIR && curBlock != AIR)
+									renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 512);
+							}
 							curBlock = two_zero.Blocks[i];
 							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 512);							
 						}
 						if (three_zero.init) {
+							if (three_oner.init) {
+								curBlock = three_oner.Blocks[i];
+								if (three_zero.Blocks[i] == AIR && curBlock != AIR)
+									renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 768);
+							}
 							curBlock = three_zero.Blocks[i];
 							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 768);
 						}
 						if (four_zero.init) {
+							if (four_oner.init) {
+								curBlock = four_oner.Blocks[i];
+								if (four_zero.Blocks[i] == AIR && curBlock != AIR)
+									renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 1024);
+							}
 							curBlock = four_zero.Blocks[i];
 							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 1024);
 						}
 						if (five_zero.init) {
+							if (five_oner.init) {
+								curBlock = five_oner.Blocks[i];
+								if (five_zero.Blocks[i] == AIR && curBlock != AIR)
+									renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 1280);
+							}
 							curBlock = five_zero.Blocks[i];
 							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 1280);
 						}
 						if (six_zero.init) {
+							if (six_oner.init) {
+								curBlock = six_oner.Blocks[i];
+								if (six_zero.Blocks[i] == AIR && curBlock != AIR)
+									renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 1536);
+							}
 							curBlock = six_zero.Blocks[i];
 							renderBlockAsRect(curBlock, (2047 - i) + scroll.y, 1536);
 						}
@@ -752,8 +861,13 @@ int main(int argc, char* argv[]) {
 						loading_Chunks = true;
 						std::string ChunkPath = containingDirectory;
 						ChunkPath.append("\\0\\0\\c.0.0.dat");
-						if (spawn.loadFile(ChunkPath)) {
+						if (zero_zero.loadFile(ChunkPath)) {
 							SDL_Log("Loaded spawn chunk (0,0) sucessfully.\n");
+						}
+						ChunkPath = containingDirectory;
+						ChunkPath.append("\\0\\1r\\c.0.-1.dat");
+						if (zero_oner.loadFile(ChunkPath)) {
+							SDL_Log("Loaded chunk 0,-1 sucessfully.\n");
 						}
 
 						std::thread chunkThread(loadChunks, containingDirectory);

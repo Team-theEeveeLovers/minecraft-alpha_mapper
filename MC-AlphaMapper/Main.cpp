@@ -199,33 +199,45 @@ void showDebugMenu(bool* open = (bool*)0) {
 
 void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 	SDL_Rect drawingRect = { 4+(16 * y), 4+(16 * x), 16, 16 };
+
+	// is the block currently being drawn known?
+	bool knownBlock = false;
 	switch (blockID) {
 	case AIR:
 		main_renderer.setDrawColor(0xB1, 0xEB, 0xF1, 0x99);
+		knownBlock = true;
 		break;
 	case LAVA_FLOWING: case LAVA_STILL:
 		main_renderer.setDrawColor(0xFC, 0x77, 0x03);
+		knownBlock = true;
 		break;
 	case WATER_FLOWING: case WATER_STILL:
 		main_renderer.setDrawColor(0x03, 0x77, 0xFC);
+		knownBlock = true;
 		break;
 	case STONE:
 		main_renderer.setDrawColor(0x55, 0x55, 0x55);
+		knownBlock = true;
 		break;
 	case GRASS:
 		main_renderer.setDrawColor(0x00, 0xFF, 0x77);
+		knownBlock = true;
 		break;
 	case DIRT:
 		main_renderer.setDrawColor(0x5E, 0x3E, 0x07);
+		knownBlock = true;
 		break;
 	case BEDROCK:
 		main_renderer.setDrawColor(0x11, 0x11, 0x11);
+		knownBlock = true;
 		break;
 	case SNOW_LAYER:
 		main_renderer.setDrawColor(0xEE, 0xEE, 0xFF);
+		knownBlock = true;
 		break;
 	case SAND:
 		main_renderer.setDrawColor(0xDE, 0xD4, 0xA4);
+		knownBlock = true;
 		break;
 	default:
 		main_renderer.setDrawColor(0xFF, 0xAA, 0xFF);
@@ -249,6 +261,8 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 	// blocks with "texture"
 	switch (blockID) {
 	case TORCH:
+		knownBlock = true;
+
 		drawingRect.h = 4;
 		drawingRect.w = 6;
 
@@ -264,6 +278,8 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 
 		break;
 	case GRASS:
+		knownBlock = true;
+
 		// top layer
 		drawingRect.h = 4;
 		main_renderer.setDrawColor(0x00, 0xFF, 0x77);
@@ -276,6 +292,8 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 		main_renderer.fillRect(&drawingRect);
 		break;
 	case GRAVEL:
+		knownBlock = true;
+
 		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
 		main_renderer.fillRect(&drawingRect);
 
@@ -289,6 +307,8 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 
 		break;
 	case BEDROCK:
+		knownBlock = true;
+
 		main_renderer.fillRect(&drawingRect);
 
 		main_renderer.setDrawColor(0x5E, 0x5E, 0x5E, 0x5E);
@@ -297,6 +317,8 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 		main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
 		break;
 	case IRON_ORE:
+		knownBlock = true;
+
 		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
 		main_renderer.fillRect(&drawingRect);
 
@@ -307,6 +329,8 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 
 		break;
 	case COAL_ORE:
+		knownBlock = true;
+
 		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
 		main_renderer.fillRect(&drawingRect);
 
@@ -318,6 +342,8 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 		break;
 
 	case REDSTONE_ORE:
+		knownBlock = true;
+
 		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
 		main_renderer.fillRect(&drawingRect);
 
@@ -331,6 +357,16 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 		if (blockID == SNOW_LAYER) { drawingRect.h = 8; drawingRect.y += 8; }
 		main_renderer.fillRect(&drawingRect);
 		break;
+	}
+
+	if (!knownBlock) {
+		/// make a string with a hexadecimal representation of the block ID
+		// initalize a buffer
+		char HEX_[4] = { '\0', '\0', '\0', '\0'};
+		// fill the buffer with the hex representation
+		sprintf_s(HEX_, "%02X", blockID);
+		// draw the buffer to the screen
+		ImGui::GetBackgroundDrawList()->AddText(ImVec2(drawingRect.x, drawingRect.y), IM_COL32(0, 0, 0, 255), HEX_);
 	}
 }
 

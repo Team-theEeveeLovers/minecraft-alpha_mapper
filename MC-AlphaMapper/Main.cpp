@@ -866,6 +866,24 @@ int main(int argc, char* argv[]) {
 						if (zero_zero.loadFile(ChunkPath)) {
 							SDL_Log("Loaded spawn chunk (0,0) sucessfully.\n");
 						}
+
+						for (int i = 0; i < 2048; i++) {
+							Byte curBlock = zero_zero.Blocks[i];
+							// auto scroll to blocks
+							if (curBlock != AIR) {
+								SDL_Rect drawingRect = { 4, 4 + i, 16, 16 };
+								if (drawingRect.y > 128) {
+									int tempX = drawingRect.y;
+									while (tempX > 128) {
+										//drawingRect.x += 16;
+										tempX -= 128;
+									}
+									drawingRect.y = tempX;
+								}
+								scroll.y = drawingRect.y;
+							}
+						}
+
 						ChunkPath = containingDirectory;
 						ChunkPath.append("\\0\\1r\\c.0.-1.dat");
 						if (zero_oner.loadFile(ChunkPath)) {

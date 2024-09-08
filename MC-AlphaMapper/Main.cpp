@@ -230,6 +230,7 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 	case AIR:
 		main_renderer.setDrawColor(0xB1, 0xEB, 0xF1, 0x99);
 		knownBlock = true;
+		main_renderer.fillRect(&drawingRect);
 		break;
 	case LAVA_FLOWING: case LAVA_STILL:
 		main_renderer.setDrawColor(0xFC, 0x77, 0x03);
@@ -281,6 +282,8 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 
 	// blocks with "texture" that have not been merged with the above statements
 	switch (blockID) {
+	case AIR:
+		break;
 	case TORCH:
 		knownBlock = true;
 

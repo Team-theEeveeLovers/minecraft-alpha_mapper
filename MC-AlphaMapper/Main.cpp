@@ -797,6 +797,17 @@ int main(int argc, char* argv[]) {
 
 				fileDialog.Display();
 
+				ImGuiIO& io = ImGui::GetIO(); (void)io;
+				ImGuiViewport* viewport = ImGui::GetMainViewport();
+				ImVec2 work_pos = viewport->WorkPos;
+				ImVec2 work_size = viewport->WorkSize;
+
+				ImGui::SetNextWindowPos(ImVec2(work_pos.x + work_size.x - 15.0f, 0.0f), ImGuiCond_Always, ImVec2(1.0f, 0.0f));
+				if (ImGui::Begin(" FPS", (bool*)true, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoTitleBar)) {
+					ImGui::Text("%.1f FPS (%.3f ms) ", io.Framerate, 1000.0f / io.Framerate);
+					ImGui::End();
+				}
+
 				main_gui.renderPresent();
 				main_renderer.renderPresent();
 

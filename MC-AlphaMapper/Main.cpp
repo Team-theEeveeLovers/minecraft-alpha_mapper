@@ -246,6 +246,17 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 	case GRASS:
 		main_renderer.setDrawColor(0x00, 0xFF, 0x77);
 		knownBlock = true;
+
+		// top layer
+		drawingRect.h = 4;
+		main_renderer.setDrawColor(0x00, 0xFF, 0x77);
+		main_renderer.fillRect(&drawingRect);
+
+		// bottom layer
+		drawingRect.h = 12;
+		drawingRect.y += 4;
+		main_renderer.setDrawColor(0x5E, 0x3E, 0x07);
+		main_renderer.fillRect(&drawingRect);
 		break;
 	case DIRT:
 		main_renderer.setDrawColor(0x5E, 0x3E, 0x07);
@@ -268,7 +279,7 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 		break;
 	}
 
-	// blocks with "texture"
+	// blocks with "texture" that have not been merged with the above statements
 	switch (blockID) {
 	case TORCH:
 		knownBlock = true;
@@ -288,18 +299,6 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 
 		break;
 	case GRASS:
-		knownBlock = true;
-
-		// top layer
-		drawingRect.h = 4;
-		main_renderer.setDrawColor(0x00, 0xFF, 0x77);
-		main_renderer.fillRect(&drawingRect);
-
-		// bottom layer
-		drawingRect.h = 12;
-		drawingRect.y += 4;
-		main_renderer.setDrawColor(0x5E, 0x3E, 0x07);
-		main_renderer.fillRect(&drawingRect);
 		break;
 	case GRAVEL:
 		knownBlock = true;

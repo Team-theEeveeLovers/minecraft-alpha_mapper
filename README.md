@@ -6,3 +6,8 @@ This is a ***VERY*** incomplete program for mapping Minecraft worlds saved in ve
 ## Current progress:
 * Level Info Loading and Displaying:  ``VERY INCOMPLETE``
 * Chunk Loading and Displaying:  ``SOMEWHAT INCOMPLETE``
+
+
+## BUILDING
+
+To build this program, use CMake. First, configure the CMake cache. Then, build the external libraries like SDL2 and zlib. Finally, build Minecraft Alpha Mapper.

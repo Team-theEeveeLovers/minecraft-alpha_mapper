@@ -6,7 +6,7 @@
 #include "Types/Time.h"
 #include "Types/VectorTypes.h"
 
-const char* MC_MAPPER_VERSION = "Alpha 0.0.1";
+const char* MC_MAPPER_VERSION = "Nightly 0.0.1";
 
 int screen_width = 854 * 2, screen_height = 480 * 2;
 

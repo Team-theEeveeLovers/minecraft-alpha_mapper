@@ -711,70 +711,71 @@ int main(int argc, char* argv[]) {
 
 				if (currentLVLFile.initalized) {
 					for (int i = 0; i < 2048; i++) {
-						Byte curBlock = 0x00;
+						Byte curBlock = zero_zero.Blocks[i];
+						Byte curBlock_behind = zero_oner.Blocks[i];
 						int x_offset = (2047 - i) + scroll.y;
 
 						if (zero_oner.init) {
-							curBlock = zero_oner.Blocks[i];
-							if (zero_zero.Blocks[i] == AIR && curBlock != AIR)
-								renderBlockAsRect(curBlock, x_offset);
+							if (curBlock == AIR && curBlock_behind != AIR)
+								renderBlockAsRect(curBlock_behind, x_offset);
 						}
-						curBlock = zero_zero.Blocks[i];
 						renderBlockAsRect(curBlock, x_offset);
 
 
 						if (one_zero.init) {
-							if (one_oner.init) {
-								curBlock = one_oner.Blocks[i];
-								if (one_zero.Blocks[i] == AIR && curBlock != AIR)
-									renderBlockAsRect(curBlock, x_offset, 256);
-							}
 							curBlock = one_zero.Blocks[i];
+							if (one_oner.init) {
+								curBlock_behind = one_oner.Blocks[i];
+								if (curBlock == AIR && curBlock_behind != AIR)
+									renderBlockAsRect(curBlock_behind, x_offset, 256);
+							}
 							renderBlockAsRect(curBlock, x_offset, 256);
 						}
 						if (two_zero.init) {
-							if (two_oner.init) {
-								curBlock = two_oner.Blocks[i];
-								if (two_zero.Blocks[i] == AIR && curBlock != AIR)
-									renderBlockAsRect(curBlock, x_offset, 512);
-							}
 							curBlock = two_zero.Blocks[i];
+							if (two_oner.init) {
+								curBlock_behind = two_oner.Blocks[i];
+								if (curBlock == AIR && curBlock_behind != AIR)
+									renderBlockAsRect(curBlock_behind, x_offset, 512);
+							}
+
 							renderBlockAsRect(curBlock, x_offset, 512);
 						}
 						if (three_zero.init) {
-							if (three_oner.init) {
-								curBlock = three_oner.Blocks[i];
-								if (three_zero.Blocks[i] == AIR && curBlock != AIR)
-									renderBlockAsRect(curBlock, x_offset, 768);
-							}
 							curBlock = three_zero.Blocks[i];
+							if (three_oner.init) {
+								curBlock_behind = three_oner.Blocks[i];
+								if (curBlock == AIR && curBlock_behind != AIR)
+									renderBlockAsRect(curBlock_behind, x_offset, 768);
+							}
+
 							renderBlockAsRect(curBlock, x_offset, 768);
 						}
 						if (four_zero.init) {
-							if (four_oner.init) {
-								curBlock = four_oner.Blocks[i];
-								if (four_zero.Blocks[i] == AIR && curBlock != AIR)
-									renderBlockAsRect(curBlock, x_offset, 1024);
-							}
 							curBlock = four_zero.Blocks[i];
+							if (four_oner.init) {
+								curBlock_behind = four_oner.Blocks[i];
+								if (curBlock == AIR && curBlock_behind != AIR)
+									renderBlockAsRect(curBlock_behind, x_offset, 1024);
+							}
 							renderBlockAsRect(curBlock, x_offset, 1024);
 						}
 						if (five_zero.init) {
-							if (five_oner.init) {
-								curBlock = five_oner.Blocks[i];
-								if (five_zero.Blocks[i] == AIR && curBlock != AIR)
-									renderBlockAsRect(curBlock, x_offset, 1280);
-							}
 							curBlock = five_zero.Blocks[i];
+							if (five_oner.init) {
+								curBlock_behind = five_oner.Blocks[i];
+								if (curBlock == AIR && curBlock_behind != AIR)
+									renderBlockAsRect(curBlock_behind, x_offset, 1280);
+							}
 							renderBlockAsRect(curBlock, x_offset, 1280);
 						}
 						if (six_zero.init) {
-							if (six_oner.init) {
-								curBlock = six_oner.Blocks[i];
-								if (six_zero.Blocks[i] == AIR && curBlock != AIR)
-									renderBlockAsRect(curBlock, x_offset, 1536);
-							}
 							curBlock = six_zero.Blocks[i];
+							if (six_oner.init) {
+								curBlock_behind = six_oner.Blocks[i];
+								if (curBlock == AIR && curBlock_behind != AIR)
+									renderBlockAsRect(curBlock_behind, x_offset, 1536);
+							}
 							renderBlockAsRect(curBlock, x_offset, 1536);
 						}
 					}

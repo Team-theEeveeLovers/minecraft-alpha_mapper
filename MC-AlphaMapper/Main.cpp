@@ -40,7 +40,7 @@ int loading_Chunk = 0;
 
 vector2_int scroll;
 
-#define DEBUG_MULTITHREADING
+//#define DEBUG_MULTITHREADING
 
 bool initMain() {
 	bool success = true;

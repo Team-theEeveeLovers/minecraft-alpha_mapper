@@ -208,6 +208,22 @@ void showDebugMenu(bool* open = (bool*)0) {
 void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 	SDL_Rect drawingRect = { 4+(16 * y), 4+(16 * x), 16, 16 };
 
+	int screenWidth = screen_width;
+	if (screenWidth % 16 != 0)
+		screenWidth -= (screenWidth % 16);
+
+	if (drawingRect.y > 2048) {
+		int tempX = drawingRect.y;
+		while (tempX > 2048) {
+			drawingRect.x += 16;
+			tempX -= 2048;
+		}
+		drawingRect.y = tempX;
+	}
+
+	drawingRect.x += x_offset;
+
+
 	// is the block currently being drawn known?
 	bool knownBlock = false;
 	switch (blockID) {
@@ -251,20 +267,6 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 		main_renderer.setDrawColor(0xFF, 0xAA, 0xFF);
 		break;
 	}
-	int screenWidth = screen_width;
-	if (screenWidth % 16 != 0) 
-		screenWidth -= (screenWidth % 16);
-
-	if (drawingRect.y > 2048) {
-		int tempX = drawingRect.y;
-		while (tempX > 2048) {
-			drawingRect.x += 16;
-			tempX -= 2048;
-		}
-		drawingRect.y = tempX;
-	}
-
-	drawingRect.x += x_offset;
 
 	// blocks with "texture"
 	switch (blockID) {

@@ -379,7 +379,11 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 			// initalize a buffer
 			char HEX_[4] = { '\0', '\0', '\0', '\0'};
 			// fill the buffer with the hex representation
+#ifndef __GNUC__
 			sprintf_s(HEX_, "%02X", blockID);
+#else
+			sprintf(HEX_, "%02X", blockID);
+#endif
 			// draw the buffer to the screen
 			ImGui::GetBackgroundDrawList()->AddText(ImVec2(drawingRect.x, drawingRect.y), IM_COL32(0, 0, 0, 255), HEX_);
 		}

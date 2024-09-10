@@ -59,6 +59,23 @@ public:
 	 */
 	void setMinimumWindowSize(int w, int h);
 
+	/**
+	 * @brief Gets the current width of the window
+	 * @return The current width of the window
+	 */
+	int getWidth();
+
+	/**
+	* @brief Gets the current height of the window
+	* @return The current height of the window
+	*/
+	int getHeight();
+
+	/**
+	 * @brief Processes any window events
+	 * @param event - The SDL_WindowEvent structure to process
+	 */
+	void processEvent(SDL_WindowEvent WINDOW_event);
 
 	// destroy the window and free memory
 	void destroyWindow();
@@ -66,4 +83,5 @@ public:
 protected:
 	SDL_Window* SDLW = NULL;
 	SDL_Surface* SDLW_S = NULL;
+	int WINDOW_WIDTH = 0, WINDOW_HEIGHT = 0;
 };

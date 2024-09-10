@@ -21,6 +21,7 @@ bool WINDOW::createWindow(const char* title, int width, int height, Uint32 flags
 	}
 	else {
 		SDL_SetWindowMinimumSize(SDLW, width, height);
+		WINDOW_WIDTH = width; WINDOW_HEIGHT = height;
 		return true;
 	}
 }
@@ -87,6 +88,38 @@ void WINDOW::setMinimumWindowSize(int w, int h)
 	}
 	else {
 		SDL_SetWindowMinimumSize(SDLW, w, h);
+	}
+}
+
+int WINDOW::getWidth()
+{
+	if (SDLW == NULL) {
+		ASSERT(SDLW != NULL && "Tried to get width of an uninitialized window!");
+		return -1;
+	}
+	else {
+		return WINDOW_WIDTH;
+	}
+}
+
+int WINDOW::getHeight()
+{
+	if (SDLW == NULL) {
+		ASSERT(SDLW != NULL && "Tried to get height of an uninitialized window!");
+		return -1;
+	}
+	else {
+		return WINDOW_HEIGHT;
+	}
+}
+
+void WINDOW::processEvent(SDL_WindowEvent WINDOW_event)
+{
+	switch (WINDOW_event.event) {
+	case SDL_WINDOWEVENT_SIZE_CHANGED:
+		WINDOW_WIDTH = WINDOW_event.data1;
+		WINDOW_HEIGHT = WINDOW_event.data2;
+	break;
 	}
 }
 

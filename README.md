@@ -11,3 +11,10 @@ This is a ***VERY*** incomplete program for mapping Minecraft worlds saved in ve
 ## BUILDING
 
 To build this program, use CMake. First, configure the CMake cache. Then, build the external libraries like SDL2 and zlib. Finally, build Minecraft Alpha Mapper.
+
+
+
+## Useful Resources
+### These resources helped in the development of this program
+* [Java Edition Alpha Level Format - Minecraft Wiki](https://minecraft.wiki/w/Java_Edition_Alpha_level_format)
+* [Official NBT Specification](https://web.archive.org/web/20110723210920/http://www.minecraft.net/docs/NBT.txt)

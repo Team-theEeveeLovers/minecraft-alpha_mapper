@@ -223,162 +223,166 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 
 	drawingRect.x += x_offset;
 
-
-	// is the block currently being drawn known?
-	bool knownBlock = false;
-	switch (blockID) {
-	case AIR:
-		main_renderer.setDrawColor(0xB1, 0xEB, 0xF1, 0x99);
-		knownBlock = true;
-		main_renderer.fillRect(&drawingRect);
-		break;
-	case LAVA_FLOWING: case LAVA_STILL:
-		main_renderer.setDrawColor(0xFC, 0x77, 0x03);
-		knownBlock = true;
-		break;
-	case WATER_FLOWING: case WATER_STILL:
-		main_renderer.setDrawColor(0x03, 0x77, 0xFC);
-		knownBlock = true;
-		break;
-	case STONE:
-		main_renderer.setDrawColor(0x55, 0x55, 0x55);
-		knownBlock = true;
-		break;
-	case GRASS:
-		main_renderer.setDrawColor(0x00, 0xFF, 0x77);
-		knownBlock = true;
-
-		// top layer
-		drawingRect.h = 4;
-		main_renderer.setDrawColor(0x00, 0xFF, 0x77);
-		main_renderer.fillRect(&drawingRect);
-
-		// bottom layer
-		drawingRect.h = 12;
-		drawingRect.y += 4;
-		main_renderer.setDrawColor(0x5E, 0x3E, 0x07);
-		main_renderer.fillRect(&drawingRect);
-		break;
-	case DIRT:
-		main_renderer.setDrawColor(0x5E, 0x3E, 0x07);
-		knownBlock = true;
-		break;
-	case BEDROCK:
-		main_renderer.setDrawColor(0x11, 0x11, 0x11);
-		knownBlock = true;
-		break;
-	case SNOW_LAYER:
-		main_renderer.setDrawColor(0xEE, 0xEE, 0xFF);
-		knownBlock = true;
-		break;
-	case SAND:
-		main_renderer.setDrawColor(0xDE, 0xD4, 0xA4);
-		knownBlock = true;
-		break;
-	default:
-		main_renderer.setDrawColor(0xFF, 0xAA, 0xFF);
-		break;
+	if (drawingRect.x > screen_width || drawingRect.y > screen_height) {
+		return;
 	}
+	else {
+		// is the block currently being drawn known?
+		bool knownBlock = false;
+		switch (blockID) {
+		case AIR:
+			main_renderer.setDrawColor(0xB1, 0xEB, 0xF1, 0x99);
+			knownBlock = true;
+			main_renderer.fillRect(&drawingRect);
+			break;
+		case LAVA_FLOWING: case LAVA_STILL:
+			main_renderer.setDrawColor(0xFC, 0x77, 0x03);
+			knownBlock = true;
+			break;
+		case WATER_FLOWING: case WATER_STILL:
+			main_renderer.setDrawColor(0x03, 0x77, 0xFC);
+			knownBlock = true;
+			break;
+		case STONE:
+			main_renderer.setDrawColor(0x55, 0x55, 0x55);
+			knownBlock = true;
+			break;
+		case GRASS:
+			main_renderer.setDrawColor(0x00, 0xFF, 0x77);
+			knownBlock = true;
 
-	// blocks with "texture" that have not been merged with the above statements
-	switch (blockID) {
-	case AIR:
-		break;
-	case TORCH:
-		knownBlock = true;
+			// top layer
+			drawingRect.h = 4;
+			main_renderer.setDrawColor(0x00, 0xFF, 0x77);
+			main_renderer.fillRect(&drawingRect);
 
-		drawingRect.h = 4;
-		drawingRect.w = 6;
+			// bottom layer
+			drawingRect.h = 12;
+			drawingRect.y += 4;
+			main_renderer.setDrawColor(0x5E, 0x3E, 0x07);
+			main_renderer.fillRect(&drawingRect);
+			break;
+		case DIRT:
+			main_renderer.setDrawColor(0x5E, 0x3E, 0x07);
+			knownBlock = true;
+			break;
+		case BEDROCK:
+			main_renderer.setDrawColor(0x11, 0x11, 0x11);
+			knownBlock = true;
+			break;
+		case SNOW_LAYER:
+			main_renderer.setDrawColor(0xEE, 0xEE, 0xFF);
+			knownBlock = true;
+			break;
+		case SAND:
+			main_renderer.setDrawColor(0xDE, 0xD4, 0xA4);
+			knownBlock = true;
+			break;
+		default:
+			main_renderer.setDrawColor(0xFF, 0xAA, 0xFF);
+			break;
+		}
 
-		drawingRect.x += 6;
+		// blocks with "texture" that have not been merged with the above statements
+		switch (blockID) {
+		case AIR:
+			break;
+		case TORCH:
+			knownBlock = true;
 
-		main_renderer.setDrawColor(0xFF, 0xE9, 0x57);
-		main_renderer.fillRect(&drawingRect);
+			drawingRect.h = 4;
+			drawingRect.w = 6;
 
-		drawingRect.h = 12;
-		drawingRect.y += 4;
-		main_renderer.setDrawColor(0x57, 0x3C, 0x08);
-		main_renderer.fillRect(&drawingRect);
+			drawingRect.x += 6;
 
-		break;
-	case GRASS:
-		break;
-	case GRAVEL:
-		knownBlock = true;
+			main_renderer.setDrawColor(0xFF, 0xE9, 0x57);
+			main_renderer.fillRect(&drawingRect);
 
-		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
-		main_renderer.fillRect(&drawingRect);
+			drawingRect.h = 12;
+			drawingRect.y += 4;
+			main_renderer.setDrawColor(0x57, 0x3C, 0x08);
+			main_renderer.fillRect(&drawingRect);
 
-		// dots
-		main_renderer.setDrawColor(0x5E, 0x5E, 0x5E, 0x5E);
-		main_renderer.fillRect({ drawingRect.x + 2, drawingRect.y + 2, 4, 4 });
-		main_renderer.fillRect({ drawingRect.x + 10, drawingRect.y + 10, 4, 4 });
+			break;
+		case GRASS:
+			break;
+		case GRAVEL:
+			knownBlock = true;
 
-		main_renderer.setDrawColor(0x5E, 0x5E, 0x5E, 0x85);
-		main_renderer.fillRect({ drawingRect.x + 3, drawingRect.y + 9, 4, 4 });
+			main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
+			main_renderer.fillRect(&drawingRect);
 
-		break;
-	case BEDROCK:
-		knownBlock = true;
+			// dots
+			main_renderer.setDrawColor(0x5E, 0x5E, 0x5E, 0x5E);
+			main_renderer.fillRect({ drawingRect.x + 2, drawingRect.y + 2, 4, 4 });
+			main_renderer.fillRect({ drawingRect.x + 10, drawingRect.y + 10, 4, 4 });
 
-		main_renderer.fillRect(&drawingRect);
+			main_renderer.setDrawColor(0x5E, 0x5E, 0x5E, 0x85);
+			main_renderer.fillRect({ drawingRect.x + 3, drawingRect.y + 9, 4, 4 });
 
-		main_renderer.setDrawColor(0x5E, 0x5E, 0x5E, 0x5E);
-		main_renderer.fillRect({ drawingRect.x + 2, drawingRect.y + 2, 4, 4 });
+			break;
+		case BEDROCK:
+			knownBlock = true;
 
-		main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
-		break;
-	case IRON_ORE:
-		knownBlock = true;
+			main_renderer.fillRect(&drawingRect);
 
-		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
-		main_renderer.fillRect(&drawingRect);
+			main_renderer.setDrawColor(0x5E, 0x5E, 0x5E, 0x5E);
+			main_renderer.fillRect({ drawingRect.x + 2, drawingRect.y + 2, 4, 4 });
 
-		// dots
-		main_renderer.setDrawColor(0xCC, 0x90, 0x7C, 0xCC);
-		main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
-		main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
+			main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
+			break;
+		case IRON_ORE:
+			knownBlock = true;
 
-		break;
-	case COAL_ORE:
-		knownBlock = true;
+			main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
+			main_renderer.fillRect(&drawingRect);
 
-		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
-		main_renderer.fillRect(&drawingRect);
+			// dots
+			main_renderer.setDrawColor(0xCC, 0x90, 0x7C, 0xCC);
+			main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
+			main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
 
-		// dots
-		main_renderer.setDrawColor(0x22, 0x22, 0x22, 0xCC);
-		main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
-		main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
-		
-		break;
+			break;
+		case COAL_ORE:
+			knownBlock = true;
 
-	case REDSTONE_ORE:
-		knownBlock = true;
+			main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
+			main_renderer.fillRect(&drawingRect);
 
-		main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
-		main_renderer.fillRect(&drawingRect);
+			// dots
+			main_renderer.setDrawColor(0x22, 0x22, 0x22, 0xCC);
+			main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
+			main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
 
-		// dots
-		main_renderer.setDrawColor(0xFF, 0x22, 0x22, 0xCC);
-		main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
-		main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
+			break;
 
-		break;
-	default:		
-		if (blockID == SNOW_LAYER) { drawingRect.h = 8; drawingRect.y += 8; }
-		main_renderer.fillRect(&drawingRect);
-		break;
-	}
+		case REDSTONE_ORE:
+			knownBlock = true;
 
-	if (!knownBlock) {
-		/// make a string with a hexadecimal representation of the block ID
-		// initalize a buffer
-		char HEX_[4] = { '\0', '\0', '\0', '\0'};
-		// fill the buffer with the hex representation
-		sprintf_s(HEX_, "%02X", blockID);
-		// draw the buffer to the screen
-		ImGui::GetBackgroundDrawList()->AddText(ImVec2(drawingRect.x, drawingRect.y), IM_COL32(0, 0, 0, 255), HEX_);
+			main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
+			main_renderer.fillRect(&drawingRect);
+
+			// dots
+			main_renderer.setDrawColor(0xFF, 0x22, 0x22, 0xCC);
+			main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
+			main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
+
+			break;
+		default:
+			if (blockID == SNOW_LAYER) { drawingRect.h = 8; drawingRect.y += 8; }
+			main_renderer.fillRect(&drawingRect);
+			break;
+		}
+
+		if (!knownBlock) {
+			/// make a string with a hexadecimal representation of the block ID
+			// initalize a buffer
+			char HEX_[4] = { '\0', '\0', '\0', '\0'};
+			// fill the buffer with the hex representation
+			sprintf_s(HEX_, "%02X", blockID);
+			// draw the buffer to the screen
+			ImGui::GetBackgroundDrawList()->AddText(ImVec2(drawingRect.x, drawingRect.y), IM_COL32(0, 0, 0, 255), HEX_);
+		}
 	}
 }
 

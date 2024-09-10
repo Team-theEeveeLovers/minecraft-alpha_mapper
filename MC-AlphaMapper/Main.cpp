@@ -618,6 +618,12 @@ int main(int argc, char* argv[]) {
 						}
 					}
 				}
+
+				if (e.type == SDL_WINDOWEVENT) {
+					main_window.processEvent(e.window);
+					screen_width = main_window.getWidth();
+					screen_height = main_window.getHeight();
+				}
 			}
 			// if the above hasn't resulted in exiting
 			if (!quit) {

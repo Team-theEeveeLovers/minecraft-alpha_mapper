@@ -71,7 +71,12 @@ class LongTag : public tag {
 
 	// the long value contained within the tag 
 public:
+	// check for GCC since the i64 operator doesn't exist
+#ifndef __GNUC__
 	Sint64 value = 0x00i64;
+#else
+	Sint64 value = 0x00;
+#endif
 };
 
 class StringTag : public tag {

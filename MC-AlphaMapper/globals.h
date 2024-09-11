@@ -1,5 +1,13 @@
 #pragma once
 
+#if defined(WIN32) && !defined(UNIX)
+#define WINDOWS
+
+#elif defined(UNIX) && !defined(WIN32)
+#define POSIX
+
+#endif
+
 #ifndef ASSERT
 #include <assert.h>
 #define ASSERT(_EXPR)            assert(_EXPR)                              

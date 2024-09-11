@@ -31,6 +31,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+[Bb]uilds/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -142,10 +143,7 @@ _TeamCity*
 .axoCover/*
 !.axoCover/settings.json
 
-# Coverlet is a free, cross platform Code Coverage Tool
-coverage*.json
-coverage*.xml
-coverage*.info
+# Coverlet is a free
 
 # Visual Studio code coverage results
 *.coverage
@@ -399,3 +397,8 @@ FodyWeavers.xsd
 
 # Build output directory
 /out/build/
+
+
+# External Libraries
+_dependlibs/
+_dependlibs/SDL2

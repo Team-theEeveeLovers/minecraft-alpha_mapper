@@ -33,6 +33,7 @@ CHUNK_DATA four_oner;
 CHUNK_DATA five_oner;
 CHUNK_DATA six_oner;
 
+
 // are we currently loading chunks?
 bool loading_Chunks = false;
 // the chunk currently being loaded
@@ -134,6 +135,10 @@ void initMainStyles()
 	colors[ImGuiCol_TabSelectedOverline] = ImVec4(1.00f, 0.54f, 0.54f, 0.42f);
 	colors[ImGuiCol_PopupBg] = ImVec4(0.18f, 0.18f, 0.08f, 0.94f);
 	colors[ImGuiCol_MenuBarBg] = ImVec4(0.41f, 0.22f, 0.00f, 1.00f);
+}
+
+void postInit() {
+	main_window.setMinimumWindowSize(screen_width / 2, screen_height / 2);
 }
 
 void exitMain()
@@ -422,7 +427,11 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 #endif
 	ChunkPath = BASEpath_TEMP;
+	#ifdef POSIX
+	ChunkPath.append("/1/0/c.1.0.dat");
+	#else
 	ChunkPath.append("\\1\\0\\c.1.0.dat");
+	#endif
 	if (one_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 1,0 sucessfully.\n");
 	}
@@ -431,11 +440,26 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(250));
 #endif
 	ChunkPath = BASEpath_TEMP;
+	#ifdef POSIX
+	ChunkPath.append("/1/1r/c.1.-1.dat");
+	#else
 	ChunkPath.append("\\1\\1r\\c.1.-1.dat");
+	#endif
 	if (one_oner.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 1,-1 sucessfully.\n");
 	}
-
+	else {
+		// temporary fallback
+		ChunkPath = BASEpath_TEMP;
+		#ifdef POSIX
+		ChunkPath.append("/1/1q/c.1.-2.dat");
+		#else
+		ChunkPath.append("\\1\\1q\\c.1.-2.dat");
+		#endif
+		if (one_oner.loadFile(ChunkPath)) {
+			SDL_Log("Loaded chunk 1,-2 sucessfully.\n");
+		}
+	}
 	loading_Chunk = 2;
 #ifdef DEBUG_MULTITHREADING
 	// Debug Delay
@@ -551,6 +575,7 @@ int main(int argc, char* argv[]) {
 		std::cout << std::endl << "Initalization Success." << std::endl;
 
 		initMainStyles();
+		postInit();
 
 		SDL_Event e; 
 		bool quit = false;

@@ -10,7 +10,7 @@ This is a ***VERY*** incomplete program for mapping Minecraft worlds saved in ve
 
 ## BUILDING
 
-To build this program, use CMake. First, configure the CMake cache. Then, build the external libraries like SDL2 and zlib. Finally, build Minecraft Alpha Mapper.
+To build this program, use CMake. First, configure the CMake cache. If it fails with an error like ``The source directory ...  does not contain a CMakeLists.txt file.`` then you will need to open a terminal in the minecraft-alpha_mapper folder and run the following git-cli commands: ``git submodule init`` ``git submodule update`` and wait for them to complete before trying again. Once CMake is finished configuring, build the external libraries like SDL2 and zlib. Finally, build Minecraft Alpha Mapper.
 
 
 

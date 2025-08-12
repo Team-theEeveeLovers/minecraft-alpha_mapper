@@ -397,7 +397,7 @@ FodyWeavers.xsd
 
 # Build output directory
 /out/build/
-
+/build
 
 # External Libraries
 _dependlibs/

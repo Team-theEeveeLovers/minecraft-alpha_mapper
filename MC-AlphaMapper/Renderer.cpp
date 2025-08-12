@@ -22,7 +22,7 @@ SDL_Renderer* RENDERER::getRenderer()
 	return SDLR;
 }
 
-bool RENDERER::createRenderer(WINDOW window, Uint32 flags, int index)
+bool RENDERER::createRenderer(WINDOW window, Uint32 flags, Uint32 fallback_flags, int index)
 {
 	SDL_Window* mWindow = window;
 	SDLR = SDL_CreateRenderer(mWindow, index, flags);
@@ -32,8 +32,13 @@ bool RENDERER::createRenderer(WINDOW window, Uint32 flags, int index)
 	}
 	else if (SDLR == NULL) {
 		SDL_LogError(0, "SDL renderer creation failed. SDL Error: %s\n", SDL_GetError());
-		ASSERT(SDLR != NULL && "Creating SDL renderer failed.");
-		return false;
+		SDL_Log("Using fallback renderer.\n");
+		SDLR = SDL_CreateRenderer(mWindow, index, fallback_flags);
+		if (SDLR == NULL) {
+			ASSERT(SDLR != NULL && "Creating SDL renderer failed.");
+			return false;
+		}
+		else {return true;}
 	}
 	else {
 		return true;

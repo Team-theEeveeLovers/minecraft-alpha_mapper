@@ -6,6 +6,9 @@
 #elif defined(UNIX) && !defined(WIN32)
 #define POSIX
 
+#elif defined(__unix__) && !defined(WIN32)
+#define POSIX
+
 #endif
 
 #ifndef ASSERT

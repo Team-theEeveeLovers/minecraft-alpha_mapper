@@ -162,7 +162,8 @@ SDL_Texture* RENDERER::convertSurfaceToTexture(SDL_Surface* srface)
 
 	if (outTex == nullptr) {
 		SDL_LogError(0, "Failed to create a texture from a surface! SDL_Error: %s\n", SDL_GetError());
-		return outTex; // TODO: REDUNDANT???
+		//return outTex; // TODO: REDUNDANT???
+		// yes, definitely redundant 
 	}
 
 

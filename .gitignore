@@ -405,3 +405,4 @@ _dependlibs/SDL2
 
 # Visual Studio Specific Working Folder
 .vscode/
+# Even though it is already on line 378 I still have issues (even though this is a template by VS 2022 and these things should work together)

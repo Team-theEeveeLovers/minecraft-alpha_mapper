@@ -880,6 +880,7 @@ int main(int argc, char* argv[]) {
 						scroll = vector2_int();
 
 						LevelLastPlay.unixTime = currentLVLFile.getLastPlayTime().value;
+						LevelLastPlay.EpochTime = LevelLastPlay.unixTime / 1000; // convert milisecond format to second format
 
 						// POST LOAD: Draw new frame
 

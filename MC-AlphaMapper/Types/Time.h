@@ -6,6 +6,7 @@
 */
 #pragma once
 #include "../globals.h"
+#include <time.h>
 
 /**
  * @brief A class for handling 64-bit Unix timestamps in milisecond format
@@ -21,6 +22,7 @@ private:
 	}
 public:
 	Sint64 unixTime;
+	time_t EpochTime;
 
 	/**
 	 * @brief Get the seconds value of the time
@@ -89,7 +91,9 @@ public:
 	* @return The day value of the time
 	*/
 	Uint8 toDay() const {
-		Sint64 days = toDays();
+		tm* tmday = localtime(&EpochTime);
+		return static_cast<Uint8>(tmday->tm_mday);
+		/*Sint64 days = toDays();
 		Sint64 year = toYear();
 		Uint8 months = toMonth();
 
@@ -139,7 +143,7 @@ public:
 				break;
 			}
 		}
-		return days - 12;
+		return days - 12;*/
 	}
 
 	/**

@@ -200,6 +200,7 @@ void showDebugMenu(bool* open = (bool*)0) {
 		return;
 	}
 
+	ImGui::Text("Scroll X: %d", scroll.x);
 	ImGui::Text("Scroll Y: %d", scroll.y);
 
 	if (ImGui::Button("Useless Button"))

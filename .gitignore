@@ -402,6 +402,7 @@ FodyWeavers.xsd
 # External Libraries
 _dependlibs/
 _dependlibs/SDL2
+_dependlibs/zlib
 
 # Visual Studio Specific Working Folder
 .vscode/

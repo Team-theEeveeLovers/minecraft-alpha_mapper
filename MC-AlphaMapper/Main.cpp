@@ -6,6 +6,13 @@
 #include "Types/Time.h"
 #include "Types/VectorTypes.h"
 
+/**
+* @file Main.cpp
+* @brief The main source file of the TtEL Minecraft Alpha Level Mapper
+* @author Team theEeveeLovers Sean
+* @date August 1st, 2024
+*/
+
 const char* MC_MAPPER_VERSION = "Nightly 0.0.2";
 
 int screen_width = 854 * 2, screen_height = 480 * 2;

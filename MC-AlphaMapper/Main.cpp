@@ -572,7 +572,6 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(250));
 #endif
 	ChunkPath = BASEpath_TEMP;
-	ChunkPath.append("\\2\\1r\\c.2.-1.dat");
 	ChunkPath.append(resolveChunkPathFormatting("2", "1r", "c.2.-1.dat"));
 	if (two_oner.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 2,-1 sucessfully.\n");

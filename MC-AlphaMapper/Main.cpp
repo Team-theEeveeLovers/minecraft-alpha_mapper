@@ -532,11 +532,9 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 #endif
 	ChunkPath = BASEpath_TEMP;
-	#ifdef POSIX
-	ChunkPath.append("/1/0/c.1.0.dat");
-	#else
-	ChunkPath.append("\\1\\0\\c.1.0.dat");
-	#endif
+	
+	ChunkPath.append(resolveChunkPathFormatting("1", "0", "c.1.0.dat"));
+	
 	if (one_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 1,0 sucessfully.\n");
 	}
@@ -545,22 +543,16 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(250));
 #endif
 	ChunkPath = BASEpath_TEMP;
-	#ifdef POSIX
-	ChunkPath.append("/1/1r/c.1.-1.dat");
-	#else
-	ChunkPath.append("\\1\\1r\\c.1.-1.dat");
-	#endif
+
+	ChunkPath.append(resolveChunkPathFormatting("1", "1r", "c.1.-1.dat"));
+
 	if (one_oner.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 1,-1 sucessfully.\n");
 	}
 	else {
 		// temporary fallback
 		ChunkPath = BASEpath_TEMP;
-		#ifdef POSIX
-		ChunkPath.append("/1/1q/c.1.-2.dat");
-		#else
-		ChunkPath.append("\\1\\1q\\c.1.-2.dat");
-		#endif
+		ChunkPath.append(resolveChunkPathFormatting("1", "1q", "c.1.-2.dat"));
 		if (one_oner.loadFile(ChunkPath)) {
 			SDL_Log("Loaded chunk 1,-2 sucessfully.\n");
 		}
@@ -571,7 +563,7 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 #endif
 	ChunkPath = BASEpath_TEMP;
-	ChunkPath.append("\\2\\0\\c.2.0.dat");
+	ChunkPath.append(resolveChunkPathFormatting("2", "0", "c.2.0.dat"));
 	if (two_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 2,0 sucessfully.\n");
 	}
@@ -581,6 +573,7 @@ auto loadChunks(std::string BASEpath) {
 #endif
 	ChunkPath = BASEpath_TEMP;
 	ChunkPath.append("\\2\\1r\\c.2.-1.dat");
+	ChunkPath.append(resolveChunkPathFormatting("2", "1r", "c.2.-1.dat"));
 	if (two_oner.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 2,-1 sucessfully.\n");
 	}
@@ -591,7 +584,7 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 #endif
 	ChunkPath = BASEpath_TEMP;
-	ChunkPath.append("\\3\\0\\c.3.0.dat");
+	ChunkPath.append(resolveChunkPathFormatting("3", "0", "c.3.0.dat"));
 	if (three_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 3,0 sucessfully.\n");
 	}
@@ -600,7 +593,7 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(250));
 #endif
 	ChunkPath = BASEpath_TEMP;
-	ChunkPath.append("\\3\\1r\\c.3.-1.dat");
+	ChunkPath.append(resolveChunkPathFormatting("3", "1r", "c.3.-1.dat"));
 	if (three_oner.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 3,-1 sucessfully.\n");
 	}
@@ -611,7 +604,7 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 #endif
 	ChunkPath = BASEpath_TEMP;
-	ChunkPath.append("\\4\\0\\c.4.0.dat");
+	ChunkPath.append(resolveChunkPathFormatting("4", "0", "c.4.0.dat"));
 	if (four_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 4,0 sucessfully.\n");
 	}
@@ -620,7 +613,7 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(250));
 #endif
 	ChunkPath = BASEpath_TEMP;
-	ChunkPath.append("\\4\\1r\\c.4.-1.dat");
+	ChunkPath.append(resolveChunkPathFormatting("4", "1r", "c.4.-1.dat"));
 	if (four_oner.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 4,-1 sucessfully.\n");
 	}
@@ -631,7 +624,7 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 #endif
 	ChunkPath = BASEpath_TEMP;
-	ChunkPath.append("\\5\\0\\c.5.0.dat");
+	ChunkPath.append(resolveChunkPathFormatting("5", "0", "c.5.0.dat"));
 	if (five_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 5,0 sucessfully.\n");
 	}
@@ -640,7 +633,7 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(250));
 #endif
 	ChunkPath = BASEpath_TEMP;
-	ChunkPath.append("\\5\\1r\\c.5.-1.dat");
+	ChunkPath.append(resolveChunkPathFormatting("5", "1r", "c.5.-1.dat"));
 	if (five_oner.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 5,-1 sucessfully.\n");
 	}
@@ -651,7 +644,7 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 #endif
 	ChunkPath = BASEpath_TEMP;
-	ChunkPath.append("\\6\\0\\c.6.0.dat");
+	ChunkPath.append(resolveChunkPathFormatting("6", "0", "c.6.0.dat"));
 	if (six_zero.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 6,0 sucessfully.\n");
 	}
@@ -660,7 +653,7 @@ auto loadChunks(std::string BASEpath) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(250));
 #endif
 	ChunkPath = BASEpath_TEMP;
-	ChunkPath.append("\\6\\1r\\c.6.-1.dat");
+	ChunkPath.append(resolveChunkPathFormatting("6", "1r", "c.6.-1.dat"));
 	if (six_oner.loadFile(ChunkPath)) {
 		SDL_Log("Loaded chunk 6,-1 sucessfully.\n");
 	}
@@ -1048,7 +1041,8 @@ int main(int argc, char* argv[]) {
 						}
 
 						ChunkPath = containingDirectory;
-						ChunkPath.append("\\0\\1r\\c.0.-1.dat");
+						//ChunkPath.append("\\0\\1r\\c.0.-1.dat");
+						ChunkPath.append(resolveChunkPathFormatting("0", "1r", "c.0.-1.dat"));
 						if (zero_oner.loadFile(ChunkPath)) {
 							SDL_Log("Loaded chunk 0,-1 sucessfully.\n");
 						}

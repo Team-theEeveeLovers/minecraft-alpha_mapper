@@ -491,6 +491,36 @@ void closeChunks() {
 	six_oner.closeFile();
 }
 
+/**
+* @brief Resolves a path to append to a main path, up to three subdirectories. 
+* This function will account for formatting differences between Windows and Unix.
+* @param folder1 - first subdirectory in the path
+* @param folder2 - second subdirectory in the path
+* @param folder3 - third subdirectory in the path
+* @return New filepath to append to the world directory
+*/
+std::string resolveChunkPathFormatting(std::string folder1, std::string folder2 = " ", std::string folder3 = " ") {
+	std::string base = "";
+	std::string separator = "";
+	#ifdef POSIX
+	base = "/";
+	separator = "/";
+	#else
+	base = "\\";
+	separator = "\\";
+	#endif
+	base.append(folder1);
+	if (folder2 != " ") {
+		base.append(separator);
+		base.append(folder2);
+		if (folder3 != " ") {
+			base.append(separator);
+			base.append(folder3);
+		}
+	}
+	return base;
+}
+
 // we gotta define up here because std::threads can't be called with class member functions (but it can be called within)
 auto loadChunks(std::string BASEpath) {
 	std::string BASEpath_TEMP = BASEpath;
@@ -994,7 +1024,8 @@ int main(int argc, char* argv[]) {
 						
 						loading_Chunks = true;
 						std::string ChunkPath = containingDirectory;
-						ChunkPath.append("\\0\\0\\c.0.0.dat");
+						//ChunkPath.append("\\0\\0\\c.0.0.dat");
+						ChunkPath.append(resolveChunkPathFormatting("0", "0", "c.0.0.dat"));
 						if (zero_zero.loadFile(ChunkPath)) {
 							SDL_Log("Loaded spawn chunk (0,0) sucessfully.\n");
 						}

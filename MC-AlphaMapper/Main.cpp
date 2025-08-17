@@ -43,6 +43,8 @@ vector2_int scroll;
 
 //#define DEBUG_MULTITHREADING
 
+/** INITALIZATION FUNCTIONS **/
+
 bool initMain() {
 	bool success = true;
 
@@ -142,6 +144,8 @@ void postInit() {
 	main_window.setMinimumWindowSize(screen_width / 2, screen_height / 2);
 }
 
+/** SHUTDOWN FUNCTIONS **/
+
 void exitMain()
 {
 	std::cout << std::endl << std::endl << "Exiting..." << std::endl << std::endl;
@@ -159,6 +163,8 @@ void exitMain()
 
 	std::cout << std::endl << std::endl << "Goodbye!" << std::endl << std::endl;
 }
+
+/** POPUP MENU RENDERING FUNCTIONS **/
 
 /**
  * @brief Shows this program's about menu
@@ -211,6 +217,7 @@ void showDebugMenu(bool* open = (bool*)0) {
 	ImGui::End();
 }
 
+/** BLOCK DRAWING FUNCTIONS **/
 
 void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 	SDL_Rect drawingRect = { 4+(16 * y), 4+(16 * x), 16, 16 };
@@ -453,6 +460,9 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 	}
 }
 
+/** CHUNK FUNCTIONS **/
+
+
 /**
  * @brief Function to close all chunks so I don't have to write it twice when I add more chunks to load
  */
@@ -623,6 +633,8 @@ auto loadChunks(std::string BASEpath) {
 	// reset status value
 	loading_Chunk = 0;
 }
+
+/** MAIN FUNCTION **/
 
 int main(int argc, char* argv[]) {
 	if (!initMain()) {

@@ -50,6 +50,7 @@ bool initMain() {
 	std::cout << "Software Version: " << MC_MAPPER_VERSION << std::endl << std::endl;
 	//Initialize SDL
 	std::cout << "Initalizing SDL... ";
+	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0)
 	{
 		std::cout << "failure" << std::endl;

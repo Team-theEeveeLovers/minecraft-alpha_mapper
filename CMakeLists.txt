@@ -9,7 +9,7 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("Minecraft Alpha Mapper")
+project ("Minecraft Alpha Mapper" HOMEPAGE_URL "https://github.com/Team-theEeveeLovers/minecraft-alpha_mapper")
 
 ## Include sub-projects.
 # External Dependency

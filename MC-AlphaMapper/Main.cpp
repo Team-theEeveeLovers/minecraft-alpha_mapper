@@ -285,6 +285,50 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 			main_renderer.setDrawColor(0xDE, 0xD4, 0xA4);
 			knownBlock = true;
 			break;
+		case OAK_LEAVES:
+			main_renderer.setDrawColor(0x10, 0xE3, 0x21, 0x64);
+			knownBlock = true;
+			main_renderer.fillRect(&drawingRect);
+
+			// dots
+			main_renderer.setDrawColor(0x50, 0x91, 0x4D, 0xAA);
+			drawingRect.x += 3;
+			drawingRect.y += 9;
+			drawingRect.w = 4;
+			drawingRect.h = 4;
+			main_renderer.fillRect(&drawingRect);
+			drawingRect.x += 5;
+			main_renderer.setDrawColor(0x10, 0xE3, 0x21, 0xAA);
+			main_renderer.fillRect(&drawingRect);
+			main_renderer.setDrawColor(0x50, 0x91, 0x4D, 0xAA);
+			drawingRect.y += 3;
+			main_renderer.fillRect(&drawingRect);
+			drawingRect.y -= 7;
+			main_renderer.fillRect(&drawingRect);
+			drawingRect.x -= 5;
+			main_renderer.setDrawColor(0x10, 0xE3, 0x21, 0xAA);
+			
+			break;
+		case OAK_WOOD:
+			// main
+			main_renderer.setDrawColor(0x85, 0x51, 0x13);
+			knownBlock = true;
+			main_renderer.fillRect(&drawingRect);
+			// dark stripe
+			drawingRect.w = 4;
+			drawingRect.x += 2;
+			main_renderer.setDrawColor(0x59, 0x41, 0x2D);
+			main_renderer.fillRect(&drawingRect);
+			// medium stripe
+			drawingRect.x += 4;
+			main_renderer.setDrawColor(0x7D, 0x58, 0x38);
+			main_renderer.fillRect(&drawingRect);
+			// light stripe
+			drawingRect.x += 4;
+			drawingRect.w = 2;
+			main_renderer.setDrawColor(0xE6, 0xB4, 0x77);
+			
+			break;
 		default:
 			main_renderer.setDrawColor(0xFF, 0xAA, 0xFF);
 			break;
@@ -371,6 +415,18 @@ void renderBlockAsRect(BYTE blockID, int x = 0, int x_offset = 0, int y = 0) {
 
 			// dots
 			main_renderer.setDrawColor(0xFF, 0x22, 0x22, 0xCC);
+			main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
+			main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
+
+			break;
+		case GOLD_ORE:
+			knownBlock = true;
+
+			main_renderer.setDrawColor(0x8C, 0x8C, 0x8C);
+			main_renderer.fillRect(&drawingRect);
+
+			// dots
+			main_renderer.setDrawColor(0xFF, 0xFF, 0x03, 0xCC);
 			main_renderer.fillRect({ drawingRect.x + 4, drawingRect.y + 4, 4, 4 });
 			main_renderer.fillRect({ drawingRect.x + 8, drawingRect.y + 8, 4, 4 });
 

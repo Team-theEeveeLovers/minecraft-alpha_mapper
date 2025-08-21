@@ -407,3 +407,6 @@ _dependlibs/zlib
 # Visual Studio Specific Working Folder
 .vscode/
 # Even though it is already on line 378 I still have issues (even though this is a template by VS 2022 and these things should work together)
+
+# deoxygen generated docs so my computer doesn't turn into a jet engine trying to calcuate source control for 3K files
+/MC-AlphaMapper/Doxydocs

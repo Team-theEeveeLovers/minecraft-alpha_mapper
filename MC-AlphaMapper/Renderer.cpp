@@ -55,6 +55,16 @@ void RENDERER::setDrawColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha)
 	}
 }
 
+void RENDERER::setRenderScale(float scaleX, float scaleY)
+{
+	if (!checkRenderer()) {
+		ASSERT(SDLR != NULL && "Tried to set render scale of an invalid renderer!");
+	}
+	else {
+		SDL_RenderSetScale(SDLR, scaleX, scaleY);
+	}
+}
+
 void RENDERER::renderClear()
 {
 	if (!checkRenderer()) {

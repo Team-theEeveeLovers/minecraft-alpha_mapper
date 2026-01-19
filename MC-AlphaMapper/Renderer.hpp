@@ -61,6 +61,16 @@ public:
 	 */
 	void setDrawColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha = SDL_ALPHA_OPAQUE);
 
+	/**
+	 * @brief Set the draw scale of the renderer
+	 * for example if you draw a point at x=800 and y=600 but the horizontal scale is 2 and the vertical scale is 2,
+	 * it will instead be rendered at x=1600 and y=1200.
+	 * @param scaleX - desired draw scale in the X axis
+	 * @param scaleY - desired draw scale in the Y axis
+	 */
+	void RENDERER::setRenderScale(float scaleX, float scaleY);
+
+
 	// clears the backbuffer of the renderer using the draw color, starting a new frame
 	void renderClear();
 

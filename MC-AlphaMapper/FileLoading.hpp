@@ -19,7 +19,7 @@
 /**
  * @brief An enum representing blocks by their ID
  */
-enum Block : BYTE {
+enum Block : _BYTE_ {
 	AIR = 0x00,
 	STONE = 0x01,
 	GRASS = 0x02,
@@ -123,7 +123,7 @@ public:
 	bool init = false;
 
 	// The block array
-	BYTE Blocks[32768];
+	_BYTE_ Blocks[32768];
 
 	/**
 	* @brief Loads a c.X.Y.dat file

@@ -1,19 +1,19 @@
 #pragma once
 #include <vector>
 
-#define BYTE Uint8
-#define SHORT short
-#define INT Sint32
-#define LONG Sint64 
-#define FLOAT float
-#define DOUBLE double
+#define _BYTE_ Uint8
+#define _SHORT_ short
+#define _INT_ Sint32
+#define _LONG_ Sint64 
+#define _FLOAT_ float
+#define _DOUBLE_ double
 
 
 /**
  * @brief An enum representing the types of NBT tags.
  * Made according to https://web.archive.org/web/20110723210920/http://www.minecraft.net/docs/NBT.txt
  */
-enum class tagType : BYTE {
+enum class tagType : _BYTE_ {
 	TAG_End = 0x00,
 	TAG_Byte = 0x01,
 	TAG_Short = 0x02,
@@ -51,7 +51,7 @@ class ByteTag : public tag {
 	tagType Type = tagType::TAG_Byte;
 public:
 	// the byte value contained within the tag
-	BYTE value = 0x00;
+	_BYTE_ value = 0x00;
 };
 
 class ShortTag : public tag {
@@ -59,7 +59,7 @@ class ShortTag : public tag {
 	tagType Type = tagType::TAG_Short;
 public:
 	// the byte value contained within the tag
-	SHORT value = 0x00;
+	_SHORT_ value = 0x00;
 };
 
 class LongTag : public tag {

@@ -202,10 +202,10 @@ bool LEVEL_DATA::readFile()
 {
 
 	// make a buffer for data reading and processing
-	BYTE dataBuffer[16];
+	_BYTE_ dataBuffer[16];
 
 	// Initial read
-	if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 1) == 0) {
+	if (SDL_RWread(out_RWops, dataBuffer, sizeof(_BYTE_), 1) == 0) {
 		throw std::invalid_argument("Error: Zero-length level file!");
 		return false;
 	}
@@ -217,7 +217,7 @@ bool LEVEL_DATA::readFile()
 	}
 	else {
 		// read again
-		if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 2) == 0) {
+		if (SDL_RWread(out_RWops, dataBuffer, sizeof(_BYTE_), 2) == 0) {
 			throw std::invalid_argument("Error: invalid length level file!");
 			return false;
 		}
@@ -234,7 +234,7 @@ bool LEVEL_DATA::readFile()
 		}
 
 		// read more
-		if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 3) == 0) {
+		if (SDL_RWread(out_RWops, dataBuffer, sizeof(_BYTE_), 3) == 0) {
 			throw std::invalid_argument("Error: invalid length level file!");
 			return false;
 		}
@@ -258,7 +258,7 @@ bool LEVEL_DATA::readFile()
 			}
 			else {
 				// read name
-				if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 4) == 0) {
+				if (SDL_RWread(out_RWops, dataBuffer, sizeof(_BYTE_), 4) == 0) {
 					throw std::invalid_argument("Error: invalid length NBT tag!");
 					return false;
 				}
@@ -268,7 +268,7 @@ bool LEVEL_DATA::readFile()
 				data.Name.append(reinterpret_cast<char*>(dataBuffer));
 				
 				// read again
-				if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 3) == 0) {
+				if (SDL_RWread(out_RWops, dataBuffer, sizeof(_BYTE_), 3) == 0) {
 					throw std::invalid_argument("Error: invalid length level file!");
 					return false;
 				}
@@ -281,7 +281,7 @@ bool LEVEL_DATA::readFile()
 					memcpy(NameLength_Pointer, &dataBuffer[2], 1);
 					memcpy(NameLength_Pointer + 1, &dataBuffer[1], 1);
 
-					if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), lastPlay.NameLength) == 0) {
+					if (SDL_RWread(out_RWops, dataBuffer, sizeof(_BYTE_), lastPlay.NameLength) == 0) {
 						throw std::invalid_argument("Error: invalid length level file!");
 						return false;
 					}
@@ -291,7 +291,7 @@ bool LEVEL_DATA::readFile()
 						// add to name
 						lastPlay.Name.append(reinterpret_cast<char*>(dataBuffer));
 
-						if (SDL_RWread(out_RWops, dataBuffer, sizeof(BYTE), 8) == 0) {
+						if (SDL_RWread(out_RWops, dataBuffer, sizeof(_BYTE_), 8) == 0) {
 							throw std::invalid_argument("Error: invalid length long tag!");
 							return false;
 						}
@@ -300,14 +300,14 @@ bool LEVEL_DATA::readFile()
 							Uint8* casted_longValue_PTR = reinterpret_cast<Uint8*>(longValue_PTR); // cast because adding to the pointer increments in 8 byte segments
 
 							// copy value in reverse order because different endianness
-							memcpy(casted_longValue_PTR + 0, &dataBuffer[7], sizeof(BYTE));
-							memcpy(casted_longValue_PTR + 1, &dataBuffer[6], sizeof(BYTE));
-							memcpy(casted_longValue_PTR + 2, &dataBuffer[5], sizeof(BYTE));
-							memcpy(casted_longValue_PTR + 3, &dataBuffer[4], sizeof(BYTE));
-							memcpy(casted_longValue_PTR + 4, &dataBuffer[3], sizeof(BYTE));
-							memcpy(casted_longValue_PTR + 5, &dataBuffer[2], sizeof(BYTE));
-							memcpy(casted_longValue_PTR + 6, &dataBuffer[1], sizeof(BYTE));
-							memcpy(casted_longValue_PTR + 7, &dataBuffer[0], sizeof(BYTE));
+							memcpy(casted_longValue_PTR + 0, &dataBuffer[7], sizeof(_BYTE_));
+							memcpy(casted_longValue_PTR + 1, &dataBuffer[6], sizeof(_BYTE_));
+							memcpy(casted_longValue_PTR + 2, &dataBuffer[5], sizeof(_BYTE_));
+							memcpy(casted_longValue_PTR + 3, &dataBuffer[4], sizeof(_BYTE_));
+							memcpy(casted_longValue_PTR + 4, &dataBuffer[3], sizeof(_BYTE_));
+							memcpy(casted_longValue_PTR + 5, &dataBuffer[2], sizeof(_BYTE_));
+							memcpy(casted_longValue_PTR + 6, &dataBuffer[1], sizeof(_BYTE_));
+							memcpy(casted_longValue_PTR + 7, &dataBuffer[0], sizeof(_BYTE_));
 						}
 					}
 				}
@@ -371,7 +371,7 @@ bool CHUNK_DATA::loadFile(std::string path)
 	}
 
 	SDL_RWseek(out_RWops, blocksStart + 6 + 4, RW_SEEK_SET);
-	SDL_RWread(out_RWops, &Blocks, sizeof(BYTE), 32768);
+	SDL_RWread(out_RWops, &Blocks, sizeof(_BYTE_), 32768);
 
 	init = true;
 

@@ -6,6 +6,11 @@
 #include "Types/Time.h"
 #include "Types/VectorTypes.h"
 
+#ifdef WINDOWS
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h> // for setting up high dpi stuff
+#endif
+
 /**
 * @file Main.cpp
 * @brief The main source file of the TtEL Minecraft Alpha Level Mapper
@@ -54,7 +59,9 @@ vector2_int scroll;
 
 bool initMain() {
 	bool success = true;
-
+	#ifdef _WIN32
+    	::SetProcessDPIAware();
+	#endif
 	std::cout << "Minecraft Alpha Level Mapper by TtEL" << std::endl;
 	std::cout << "Software Version: " << MC_MAPPER_VERSION << std::endl << std::endl;
 	//Initialize SDL
@@ -94,6 +101,7 @@ bool initMain() {
 					else {
 						ImGuiIO& io = ImGui::GetIO();
 						io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+						//io.ConfigDpiScaleFonts = true; // doesn't seem to exist despite multiple references? 
 					}
 				}
 			}
@@ -785,6 +793,8 @@ int main(int argc, char* argv[]) {
 				}
 				main_renderer.renderClear();
 				main_gui.newFrame();
+				ImGuiIO& io = ImGui::GetIO();
+				main_renderer.setRenderScale(io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
 
 				ImGui::SetNextWindowPos(ImVec2(20.f, 20.f), ImGuiCond_Once);
 				if (ImGui::Begin("Operations", NULL, ImGuiWindowFlags_MenuBar)) {
@@ -937,7 +947,7 @@ int main(int argc, char* argv[]) {
 
 				fileDialog.Display();
 
-				ImGuiIO& io = ImGui::GetIO(); (void)io;
+				//ImGuiIO& io = ImGui::GetIO(); (void)io;
 				ImGuiViewport* viewport = ImGui::GetMainViewport();
 				ImVec2 work_pos = viewport->WorkPos;
 				ImVec2 work_size = viewport->WorkSize;
